@@ -21,6 +21,8 @@ class RegisterComponent extends HTMLElement {
         const email = this.shadowRoot.querySelector("#reg-email").value;
         const password = this.shadowRoot.querySelector("#reg-password").value;
 
+//--------ACCIÓN DEL CONTROLLER---------------------------------------------------------------------------------------------
+
         //verificar que el "nuevo" usuario no exista 
         
         const exists = UsersMock.some((u) => u.username === username || u.email === email);
@@ -32,6 +34,8 @@ class RegisterComponent extends HTMLElement {
         //agregar nuevo usuario al array
         UsersMock.push({ name, username, email, password });
         alert("Usuario registrado con éxito");
+
+//-----------------------------------------------------------------------------------------------------
 
         //limpio el form
         this.shadowRoot.querySelector("form").reset();

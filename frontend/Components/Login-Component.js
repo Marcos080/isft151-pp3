@@ -22,6 +22,8 @@ class LoginComponent extends HTMLElement{
         const email = this.shadowRoot.querySelector("#log-email").value;
         const password = this.shadowRoot.querySelector("#log-password").value;
 
+         //-------ACCIÓN DEL CONTROLLER---------------------------------------------------------------------------------------------
+
         const user = UsersMock.find(
           (u) =>
             u.name === name &&
@@ -30,6 +32,8 @@ class LoginComponent extends HTMLElement{
           u.password === password 
     
         );
+
+         //-----------------------------------------------------------------------------------------------------
 
         if (user){
           alert(`Bienvenido, ${user.name}`);
