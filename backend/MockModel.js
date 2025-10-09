@@ -16,5 +16,6 @@ export let UsersMock = [
   new MockUser("jose123456764", "nose", "email12345", "12345"),
   new MockUser("tomasssss", "nose", "email12345", "54321"),
   new MockUser("fabian", "nose", "email12345", "2468"),
-  new MockUser("napoConFrita", "nose", "email12345", "7777"),
+  new MockUser("Dante Baez", "Dantoxx", "email12345", "7777"),
+  
 ];

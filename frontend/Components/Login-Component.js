@@ -1,9 +1,11 @@
-import { UsersMock } from "../../backend/MockModel.js";
+import { AuthController } from "../controllers/AuthController.js"
+const authController = new AuthController();
 
 class LoginComponent extends HTMLElement{
     constructor(){
         super();
         this.attachShadow({ mode: "open" });
+        this.auth = authController;
     }
 
     connectedCallback(){
@@ -22,24 +24,9 @@ class LoginComponent extends HTMLElement{
         const email = this.shadowRoot.querySelector("#log-email").value;
         const password = this.shadowRoot.querySelector("#log-password").value;
 
-         //-------ACCIÓN DEL CONTROLLER---------------------------------------------------------------------------------------------
+        const result = this.auth.login({ name, username, email, password });
 
-        const user = UsersMock.find(
-          (u) =>
-            u.name === name &&
-          u.username === username &&
-          u.email === email &&
-          u.password === password 
-    
-        );
-
-         //-----------------------------------------------------------------------------------------------------
-
-        if (user){
-          alert(`Bienvenido, ${user.name}`);
-        } else{
-          alert("Usuario o contraseña incorrectos");
-        }
+       alert(result.message);
      }
 
   

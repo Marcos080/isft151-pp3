@@ -1,9 +1,11 @@
-import { UsersMock } from "../../backend/MockModel.js";
+import { AuthController } from "../controllers/AuthController.js"
+const authController = new AuthController();
 
 class RegisterComponent extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
+        this.auth = authController;
     }
 
     connectedCallback(){
@@ -21,24 +23,13 @@ class RegisterComponent extends HTMLElement {
         const email = this.shadowRoot.querySelector("#reg-email").value;
         const password = this.shadowRoot.querySelector("#reg-password").value;
 
-//--------ACCIÓN DEL CONTROLLER---------------------------------------------------------------------------------------------
+        const result = this.auth.register({ name, username, email, password });
 
-        //verificar que el "nuevo" usuario no exista 
-        
-        const exists = UsersMock.some((u) => u.username === username || u.email === email);
-        if (exists){
-            alert("Ese usuario ya existe");
-            return;
+        alert(result.message);
+
+        if(result.success){
+          this.shadowRoot.querySelector("form").reset();
         }
-
-        //agregar nuevo usuario al array
-        UsersMock.push({ name, username, email, password });
-        alert("Usuario registrado con éxito");
-
-//-----------------------------------------------------------------------------------------------------
-
-        //limpio el form
-        this.shadowRoot.querySelector("form").reset();
 
     }
 
