@@ -1,32 +1,21 @@
 //este es Commonjs
 const { conectar, conexion } = require("./db/db");
-express = require("express")
-const fs = require("fs");
+const express = require("express")
+// const fs = require("fs");
 
-
+const { UserModel } = require("./model/UserModel")
 
 conectar();
-const script_sql = fs.readFileSync("./db/sql/datos_iniciales.sql", "utf8" );
+// const script_sql = fs.readFileSync("./db/sql/datos_iniciales.sql", "utf8" );
 // conexion.query(script_sql);
 
-// script_sql = `SELECT * FROM user`
-conexion.query(script_sql, (error, response) =>
-    {
-    if(error)
-    {
-        console.error("error en select", error);
-        return;
-    }
-
-    console.log("salio bien");
-
-//     for (let user of response){
-//     console.log(user);
-// }
-}
-);
-
-
+const model = new UserModel(conexion);
+model.listar();
+model.buscar(2);
+model.setUsername(2, "tomazzzElUser");
+model.setPassword(2, "contraseña");
+model.buscar(2);
+// model.borrar(6)
 
 //Si quiero usarlo de este modo tengo que poner  "type": "module", en package
 //revisar mas tarde la diferencia entre Commonjs y ESM (este es ESM)
@@ -34,26 +23,6 @@ conexion.query(script_sql, (error, response) =>
 // import mysql from "mysql2";
 // import express from "express";
 // import dotenv from "dotenv";
-
-// const agregar_user = `INSERT INTO user(name, username, email, password) VALUES (?, ?, ?, ?)`;
-// const user = [
-//     "julian",
-//     "julianElPro",
-//     "@julianes12",
-//     "1222"
-// ]
-
-// const agregar_pet = `INSERT INTO PET(id_owner, name, age, description) VALUES (?, ?, ?, ?)`
-// const pet = [
-//     "1",
-//     "bomba",
-//     4,
-//     "pitbull negro, le gusta las empanadas de pollo"
-// ];
-
-
-
-// dotenv.config();
 
 const app = express();
 app.use(express.json())
