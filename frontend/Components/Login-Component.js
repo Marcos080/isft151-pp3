@@ -57,6 +57,8 @@ class LoginComponent extends HTMLElement{
         <input type="password" id="log-password" placeholder="Ingrese contraseña" required>
         <button type="submit">Ingresar</button>
       </form>
+      <a href = "../static/register.html">Registrarse</a>
+      
     `;
   }
 
