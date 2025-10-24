@@ -1,12 +1,24 @@
-// const {conexion} = require("../db/db");
-
-const { response } = require("express");
 
 class UserModel
 {
     constructor(conexion)
     {
         this.conexion = conexion
+
+        const table_user = `
+            CREATE TABLE IF NOT EXISTS user (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            username VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL UNIQUE,
+            password VARCHAR(255) NOT NULL
+        );`;
+
+    this.conexion.query(table_user, (err, result) => {
+        if (err) { console.error("Error creando tabla:", err);}
+    });
+
+        console.log("tabla user conectada");
     }
 
     setName(id, newName)

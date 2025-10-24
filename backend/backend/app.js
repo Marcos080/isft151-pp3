@@ -3,19 +3,30 @@ const { conectar, conexion } = require("./db/db");
 const express = require("express")
 // const fs = require("fs");
 
-const { UserModel } = require("./model/UserModel")
+// const { UserModel } = require("./model/UserModel")
+// const { PetModel } = require("./model/PetModel")
 
 conectar();
 // const script_sql = fs.readFileSync("./db/sql/datos_iniciales.sql", "utf8" );
 // conexion.query(script_sql);
 
-const model = new UserModel(conexion);
+// const model = new UserModel(conexion);
+// model.listar();
+// model.buscar(2);
+// model.setUsername(2, "tomazzzElUser");
+// model.setPassword(2, "contraseña");
+// model.buscar(2);
+// // model.borrar(6)
+
+const model = new PetModel(conexion);
+// // model.agregar(1, "pedro", 4, "un pavo, ladra a los gatos el loco");
 model.listar();
-model.buscar(2);
-model.setUsername(2, "tomazzzElUser");
-model.setPassword(2, "contraseña");
-model.buscar(2);
-// model.borrar(6)
+// model.setName(4, "cafe");
+// model.setAge(4, 6);
+model.setDescription(5, "Una piedra, tiene forma de alemania");
+model.listar();
+// model.buscar(4);
+// model.borrar(6);
 
 //Si quiero usarlo de este modo tengo que poner  "type": "module", en package
 //revisar mas tarde la diferencia entre Commonjs y ESM (este es ESM)
