@@ -8,6 +8,7 @@ module.exports = function(authController) {
 
     // Mapea la petición POST a /auth/login
     router.post('/login', authController.login);
+    router.get("./login", authController.vista);
     
     return router;
 };

@@ -65,9 +65,15 @@ module.exports = function(UserModel) {
             res.status(500).json({ success: false, message: "Error interno del servidor al iniciar sesión." });
         }
     };
+
+    vista = (req, res) =>
+    {
+        return "hola";
+    }
     
     return {
         register,
-        login
+        login,
+        vista
     };
 };

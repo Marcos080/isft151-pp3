@@ -1,5 +1,6 @@
 const { conectar, conexion } = require("./db/db");
 const express = require("express")
+const cors = require("cors"); 
 
 const { UserModel } = require("./model/UserModel")
 
@@ -22,6 +23,9 @@ const authRouter = authRoutesFactory(authController);
 
 const app = express();
 app.use(express.json())
+
+// 2. USAR CORS: Esto permite la comunicación entre el puerto 5500 y el 3000
+app.use(cors());
 
 app.use('/users', userRouter);
 app.use('/auth', authRouter);
