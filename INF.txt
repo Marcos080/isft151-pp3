@@ -1,0 +1,57 @@
+Cambios
+
+UserModel = Cambio el uso de metodos asincronicos por promesas para que
+al llamarlos no devuelva undefined (al usar promesas el controlador sabe que
+si o si se devuelve lo solicitado o un mensaje de error). "Uso de async y await"
+
+Original:
+
+. El codigo sigue ejecutandose sin esperar los datos.
+. Se anidan muchos if(error)
+"Callback Hell".
+. El modelo no devuelve los datos, solo los imprime.
+
+Cambio:
+
+. El codigo pausa la ejecución (await) hasta tener los datos.
+. Se usa el bloque "try...catch" de forma limpia y estándar.
+. El modelo retorna los datos al controlador.
+
+------------------------------------------------------------------------------------
+
+Controller (por ahora solo de User)
+
+UserController = Contiene la lógica de negocio y usa los metodos asincronicos del
+modelo. Usa "async/await" y bloques "try...catch" para manejar las
+promesas del modelo.
+
+------------------------------------------------------------------------------------
+
+Router (por ahora solo de User)
+
+Router = Separa el "Controller" (la lógica) del "Router" (las rutas), Esta 
+separacion sigue el principio de "Separacion de Responsabilidad (SRP)", ademas
+de ser el estándar en marcos de trabajo como Express.js.
+
+(Dentro del archivo lo que se hace es definir los endpoints)
+
+Router para User y Pet = En vez de usar un mismo Router para los dos, se separa para
+por estos motivos:
+
+. Alto riesgo de conflictos y errores al agregar mas recursos.
+. Se necesitaria agregar una logica condicional adicional.
+. Menos modular, mayor acoplamiento.
+
+------------------------------------------------------------------------------------
+
+Continuacion con front
+
+hacer un componente "repository" el cual dependiendo x caso llame a un componente
+en especifico. Por ejemplo: un if que diga "si el usuario esta logueado,
+cargar componente dashB, sino cargar login/register".
+
+ese componente "repository" seria exportado a un "main", el cual su unica
+funcion sera usar el "init" o funcion principal del repository.
+
+Por ultimo, ese "main" sera importado por un html que sera el que este en la 
+Ruts Raiz al ejecutar app.js.

@@ -19,3 +19,7 @@ VALUES
 ( 3, 'milanesa', 6, 'loro, te juzga con la miarada'),
 ( 4, 'tobias', 1, 'gato naranja, el color te dice el resto'),
 ( 5, 'rocky', 200, 'una piedra, tiene forma de europa');
+
+const tabla_user_pet_follow = `INSERT INTO user_pet_follow(id_user, id_pet) VALUES (?, ?);`;
+let valores = [1, 1];
+conexion.query(tabla_user_pet_follow, valores);
