@@ -9,13 +9,11 @@ export class AuthService {
                 body: JSON.stringify({ name, username, email, password })
             });
 
-            // Si la respuesta no es 2xx, la manejamos como error (ej: 409 Conflict)
             if (!response.ok) {
                  const errorData = await response.json();
                  return { success: false, message: errorData.message || "Error al registrar usuario." };
             }
 
-            // Si el registro es 201 Created
             const data = await response.json();
             return data;
         } catch (error) {
@@ -33,13 +31,11 @@ export class AuthService {
                 body: JSON.stringify({ username, password }) 
             });
 
-            // Si la respuesta es 401 Unauthorized o cualquier otro error
             if (!response.ok) {
                  const errorData = await response.json();
                  return { success: false, message: errorData.message || "Credenciales inválidas." };
             }
 
-            // Si el login es 200 OK
             const data = await response.json();
             return data; 
         } catch (error) {

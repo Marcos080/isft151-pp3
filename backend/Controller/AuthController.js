@@ -66,14 +66,10 @@ module.exports = function(UserModel) {
         }
     };
 
-    vista = (req, res) =>
-    {
-        return "hola";
-    }
+ 
     
     return {
         register,
         login,
-        vista
     };
 };
