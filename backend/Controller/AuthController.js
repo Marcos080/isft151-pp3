@@ -1,3 +1,6 @@
+const jwt = require("jsonwebtoken")
+const {  promisify } = require("util")
+
 module.exports = function(UserModel) {
     
     // [POST] /auth/register
@@ -54,11 +57,23 @@ module.exports = function(UserModel) {
 
             // 3. LOGIN EXITOSO
             // Aquí iría la generación del Token JWT para la sesión
-            res.status(200).json({ 
-                success: true,
-                message: "Inicio de sesión exitoso.",
-                user: { id: user.id, username: user.username, email: user.email }
-            });
+            const token = jwt.sign({User : username}, process.env.JWT_SECRETO, { expiresIn: process.env.JWT_TIEMPO_EXPIRA })
+
+            console.log("Token:"+ token);
+
+            const cookiesOptions = 
+            {
+                expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES *24 *60 *1000),
+                httpOnly: true
+            }
+
+            res.cookie("jwt", token, cookiesOptions);
+
+            return res.status(200).json({ 
+                                        success: true, 
+                                        message: "Login exitoso",
+                                        redirect: "/" // Indica al frontend que redireccione a la ruta principal
+                                    });
 
         } catch (error) {
             console.error("Error en el login:", error);
@@ -66,10 +81,40 @@ module.exports = function(UserModel) {
         }
     };
 
- 
+
+    const isAuthenticated = async (req, res, next) =>
+    {
+        if(req.cookies.jwt)
+        {
+            try
+            {
+                console.log("se llamo isauthenticated");
+                const decodificado = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRETO)
+                const user = await UserModel.findByUsername(decodificado.User)
+                if(!user){ return next()}
+                 console.log("se llamo isauthenticated en bd");
+                req.username = user;
+                return next()
+            }
+
+            catch(error)
+            {
+                console.log(error);
+                res.redirect("/login");
+            }
+
+        }
+
+        else
+        {
+             console.log("no vio el token");
+            res.redirect("/login");
+        }
+    }
     
     return {
         register,
         login,
+        isAuthenticated
     };
 };
