@@ -35,9 +35,8 @@ app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'frontend', 'static',  'LoginApp.html'));
+    res.sendFile(path.join(__dirname, '..', 'frontend', 'static',  'index.html'));
 });
-
 
 
 

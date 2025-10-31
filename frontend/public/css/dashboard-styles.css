@@ -1,0 +1,36 @@
+/* dashboard-styles.css */
+:host {
+    display: block;
+    min-height: 100vh;
+    background-color: #1c1c1c; /* Fondo Oscuro como el login */
+    color: #e0e0e0; /* Texto Claro */
+    font-family: Arial, sans-serif;
+}
+
+.dashboard-shell {
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #3c3c3c;
+    margin-bottom: 20px;
+}
+
+#btn-logout {
+    padding: 8px 15px;
+    background-color: #ff4d4d; /* Rojo para advertencia */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#btn-logout:hover {
+    background-color: #cc0000;
+}
+

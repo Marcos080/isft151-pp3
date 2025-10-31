@@ -1,0 +1,101 @@
+/* login-styles.css (Estilo Clásico Oscuro - Versión Ajustada) */
+
+/* Variables de Color (Para consistencia) */
+:root {
+ --card-bg: #ebebeb; /* Fondo del formulario (RECTÁNGULO CENTRAL) */
+ --text-color: #e0e0e0; /* Color de texto claro */
+ --input-bg: #3c3c3c; /* Fondo de los campos de input */
+ --accent-green: #4CAF50; /* Botón Ingresar */
+ --accent-orange: #ff9800; /* Botón Registrarse */
+    /* Se eliminó la variable --dark-bg */
+}
+
+/* Estilos del Host (Centrado y Fondo de PÁGINA) */
+:host {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ min-height: 100vh; 
+ width: 100%;
+ /* ZONA CLAVE PARA CAMBIAR EL FONDO DE LA PÁGINA */
+ background: #ffffff; /* <-- BORRA ESTE VALOR Y PON EL COLOR QUE QUIERAS (ej: #000000, lightblue, etc.) */
+ font-family: Arial, sans-serif;
+ color: var(--text-color);
+ margin: 0;
+}
+
+/* Contenedor principal de la tarjeta de login */
+.login-container {
+ background-color: rgb(20, 20, 24); /* NO SE TOCA, usa la variable --card-bg */
+ padding: 30px;
+ border-radius: 8px;
+ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
+ max-width: 350px;
+ width: 100%;
+ text-align: center;
+ border: 1px solid #333; 
+}
+
+h2 {
+ color: rgb(255, 255, 255); /* Cambiado a negro para el fondo blanco */
+ margin-bottom: 25px;
+ font-size: 24px;
+ font-weight: 600;
+}
+
+form {
+ display: flex;
+ flex-direction: column;
+ gap: 15px; 
+}
+
+/* Inputs */
+input {
+ padding: 12px;
+ border: 1px solid #5555554d;
+ border-radius: 4px;
+ font-size: 16px;
+ background-color: white; /* Cambiado a blanco para mejor contraste */
+ color: black; /* Cambiado a negro para mejor contraste */
+ transition: border-color 0.3s;
+}
+
+input:focus {
+ border-color: #61afef; 
+ outline: none;
+}
+
+/* Placeholder styles */
+input::placeholder {
+ color: #999;
+}
+
+/* Grupo de botones */
+.button-group {
+ display: flex;
+ gap: 10px; 
+ margin-top: 20px; 
+}
+
+/* Estilos base para AMBOS botones */
+button {
+ flex-grow: 1; 
+ padding: 12px;
+ border: none;
+ border-radius: 4px;
+ cursor: pointer;
+ font-size: 16px;
+ font-weight: bold;
+ transition: opacity 0.2s, background-color 0.2s;
+ color: rgb(255, 255, 255); /* Texto blanco en los botones */
+}
+
+/* Botón Ingresar (Énfasis: Verde) */
+.btn-login {
+ background-color: #3e8e41;
+}
+
+/* Botón Registrarse (Secundario: Naranja) */
+.btn-register {
+ background-color: #e68a00;
+}

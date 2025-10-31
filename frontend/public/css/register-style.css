@@ -1,0 +1,129 @@
+/* register-styles.css */
+
+/* ========================================================= */
+/* VARIABLES DE COLOR (COPIA DEL LOGIN PARA CONSISTENCIA) */
+/* ========================================================= */
+:root {
+ --card-bg: #2a2a2a; /* Fondo del formulario (RECTÁNGULO CENTRAL) */
+ --text-color: #e0e0e0; /* Color de texto claro */
+ --input-bg: #3c3c3c; /* Fondo de los campos de input */
+}
+
+/* ========================================================= */
+/* ESTILOS BASE (COPIA DEL LOGIN PARA CONSISTENCIA) */
+/* ========================================================= */
+
+/* Estilos del Host (Centrado y Fondo de PÁGINA) */
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  width: 100%;
+  background: #f0f0f0; /* Fondo de la página */
+  font-family: Arial, sans-serif;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Contenedor principal de la tarjeta (RECTÁNGULO) */
+.login-container {
+  background-color: var(--card-bg); 
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
+  max-width: 350px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #333; 
+}
+
+h2 {
+  color: black; 
+  margin-bottom: 25px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; 
+}
+
+/* Inputs */
+input {
+  padding: 12px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white; 
+  color: black; 
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #61afef; 
+  outline: none;
+}
+
+/* Placeholder styles */
+input::placeholder {
+  color: #999;
+}
+
+/* Grupo de botones */
+.button-group {
+    /* Aquí va un solo botón en el registro */
+  display: flex;
+  gap: 10px; 
+  margin-top: 20px; 
+}
+
+/* ========================================================= */
+/* ESTILOS ESPECÍFICOS DEL COMPONENTE DE REGISTRO */
+/* ========================================================= */
+
+/* Botón principal de Registro */
+.btn-register-confirm {
+    flex-grow: 1; 
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+    color: white; 
+    
+    /* Color de Registro: Azul */
+    background-color: #007bff; 
+}
+
+.btn-register-confirm:hover {
+    background-color: #0056b3; 
+}
+
+/* Botón para redireccionar al Login (Volver) */
+.btn-login-redirect {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    
+    /* Estilo de enlace sutil */
+    background: none; 
+    color: #999; 
+    border: 1px solid #555; 
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-login-redirect:hover {
+    color: #e0e0e0; 
+    border-color: #e0e0e0;
+}
+
+

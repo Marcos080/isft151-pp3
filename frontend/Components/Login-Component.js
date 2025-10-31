@@ -1,73 +1,76 @@
-// LoginComponent.js (CORREGIDO)
-
-// 1. IMPORTACIÓN CORREGIDA: Usamos el servicio de frontend para las llamadas API
-// AJUSTA ESTA RUTA si moviste el AuthService.js a una carpeta 'services'
 import { AuthService } from "../services/AuthService.js"; 
-
-// ELIMINADAS: Ya no necesitamos importar ni instanciar el controlador de backend
-// const authController = new AuthController(); 
 
 class LoginComponent extends HTMLElement{
     constructor(){
         super();
         this.attachShadow({ mode: "open" });
-        // ELIMINADA: this.auth = authController;
+        // ELIMINADO: this.authService = new AuthService(); // ¡Ya no se necesita instanciar!
     }
 
     connectedCallback(){
         this.render();
-
-        const form = this.shadowRoot.querySelector("form");
-        form.addEventListener("submit", (e) => this.handleLogin(e)); 
+        this.addEventListeners(); 
     }
 
-    // HACEMOS ASÍNCRONA la función
+    addEventListeners() {
+        const form = this.shadowRoot.querySelector('#login-form');
+        const btnRegister = this.shadowRoot.querySelector('.btn-register'); 
+
+        form.addEventListener('submit', this.handleLogin.bind(this)); 
+        btnRegister.addEventListener('click', this.handleRegisterView.bind(this));
+    }
+    
+    handleRegisterView() {
+        const navigateEvent = new CustomEvent('navigate', {
+            bubbles: true, 
+            composed: true, 
+            detail: { view: 'register' }
+        });
+        this.dispatchEvent(navigateEvent);
+        console.log("Evento 'navigate' despachado para la vista 'register'.");
+    }
+
     async handleLogin(event) { 
         event.preventDefault();
 
-        // 3. SOLO TOMAMOS username y password (Lo necesario para login)
-        // ELIMINADAS: las líneas que capturaban name y email
         const username = this.shadowRoot.querySelector("#log-username").value;
         const password = this.shadowRoot.querySelector("#log-password").value;
 
-        // 4. USAMOS AWAIT para esperar la respuesta de la API
-        const result = await AuthService.login({ username, password });
-
+        // CORRECCIÓN CLAVE: Llama a la función directamente desde la CLASE AuthService
+        const result = await AuthService.login({ username, password }); 
+        
         alert(result.message);
         
         if (result.success) {
             console.log("Login exitoso:", result.user);
-            // Aquí iría la lógica de redirección o guardar el token
+            
+            const navigateEvent = new CustomEvent('navigate', {
+                bubbles: true, 
+                composed: true, 
+                detail: { view: 'dashboard' }
+            });
+            this.dispatchEvent(navigateEvent);
         }
     }
 
-    // 5. HTML SIMPLIFICADO: Eliminados los inputs innecesarios (name y email)
     render() {
         this.shadowRoot.innerHTML = `
-          <style>
-            form {
-              display: flex;
-              flex-direction: column;
-              gap: 10px;
-              max-width: 250px;
-            }
-            input, button {
-              padding: 8px;
-              border: 1px solid #ccc;
-              border-radius: 5px;
-            }
-            button {
-              background: #4CAF50;
-              color: white;
-              cursor: pointer;
-            }
-          </style>
-          <form>
-            <input type="text" id="log-username" placeholder="Ingrese usuario" required>
-            <input type="password" id="log-password" placeholder="Ingrese contraseña" required>
-            <button type="submit">Ingresar</button>
-          </form>
-          <a href = "../static/register.html">Registrarse</a>
+            <link rel="stylesheet" href="/public/css/login-styles.css">
+            
+            <div class="login-page-wrapper">
+            <div class="login-container">
+                <h2>Iniciar Sesión</h2>
+                <form id="login-form">
+                    <input type="text" id="log-username" placeholder="Usuario" required>
+                    <input type="password" id="log-password" placeholder="Contraseña" required>
+                    
+                    <div class="button-group">
+                        <button type="submit" class="btn-login">Ingresar</button>
+                        <button type="button" class="btn-register">Registrarse</button> 
+                    </div>
+                </form>
+            </div>
+            </div> 
         `;
     }
 }
