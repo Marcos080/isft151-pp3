@@ -1,0 +1,60 @@
+/* pet-matcher-styles.css */
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%; /* Asegura que ocupe toda la altura del main-content */
+}
+
+/* 🚨 AJUSTE CRÍTICO AQUÍ: pet-matcher-wrapper */
+.pet-matcher-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; 
+    max-width: 800; /* Tamaño máximo para la tarjeta (ajusta si quieres más grande) */
+    width: 90%; /* Ocupa el 90% del ancho disponible del main-content */
+    height: 80%; /* Permite que se estire para centrarse */
+    justify-content: center; /* Centra verticalmente los elementos internos si hay espacio */
+}
+
+.pet-details-and-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distribuye el info-card y los botones */
+    gap: 50px;
+    width: 100%;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0; /* Evita que los botones se encojan */
+}
+
+.btn-action {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    font-size: 2em;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s;
+    flex-shrink: 0; 
+}
+
+.btn-action:hover {
+    transform: scale(1.1);
+}
+
+.btn-dislike {
+    background-color: #f44336; 
+    color: white;
+}
+
+.btn-like {
+    background-color: #4CAF50; 
+    color: white;
+}

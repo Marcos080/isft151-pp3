@@ -2,6 +2,7 @@ const { conectar, conexion } = require("./db/db");
 const express = require("express")
 const cors = require("cors"); 
 const path = require("path");
+const cookieParser = require("cookie-parser")
 
 const { UserModel } = require("./model/UserModel")
 const { PetModel } = require("./model/PetModel")
@@ -11,7 +12,9 @@ const userControllerFactory = require('./Controller/UserController');
 const userRoutesFactory = require('./router/UserRoutes');
 const authControllerFactory = require('./Controller/AuthController');
 const authRoutesFactory = require('./router/authRoutes');
-const { PetController } = require("./Controller/PetController")
+const { PetController } = require("./Controller/PetController");
+const AuthController = require("./Controller/AuthController");
+
 
 conectar();
 
@@ -31,12 +34,23 @@ const app = express();
 app.use(express.json())
 app.use(cors());
 
+app.use(cookieParser())
+
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'frontend', 'static',  'index.html'));
+
 });
+
+
+app.get("/limpiar", (req, res) =>
+{
+    res.clearCookie("jwt")
+    console.log("cookie borrada");
+    return res.redirect("/")
+})
 
 
 

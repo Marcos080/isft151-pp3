@@ -1,0 +1,51 @@
+/* sidebar-styles.css */
+:host {
+    display: block;
+    /* Ajustes para el contenedor de la barra lateral */
+}
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Estilo del Rectángulo Celeste (User Greeting) */
+.user-greeting {
+    background-color: #00bcd4; /* Azul/Celeste fuerte */
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.user-greeting h3 {
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+/* Estilos de los botones de navegación */
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.nav-button {
+    width: 100%;
+    padding: 15px 10px;
+    background-color: #3f3f3f; /* Un color de botón sutil en el gris oscuro */
+    color: #e0e0e0;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.nav-button:hover {
+    background-color: #555555;
+}
