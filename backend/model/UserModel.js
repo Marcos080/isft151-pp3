@@ -7,29 +7,23 @@ class UserModel
         this.conexion = conexion
     }
 
-    // --- FUNCIÓN AUXILIAR: Envuelve la consulta en una Promesa ---
-    // Esto nos permite usar 'await' en los métodos de la clase.
+    
     _query(sql, values)
     {
         return new Promise((resolve, reject) => {
-            // Utilizamos la función de consulta de la conexión a la BD
             this.conexion.query(sql, values, (error, result) => {
                 if (error) {
-                    return reject(error); // Rechaza la Promesa si hay un error en la BD
+                    return reject(error); 
                 }
-                resolve(result); // Resuelve la Promesa con los resultados
+                resolve(result); 
             });
         });
     }
 
-    // === MÉTODOS CRUD MODIFICADOS (Usando async/await) ===
-    
-    // UPDATE: Cambia el nombre
     async setName(id, newName)
     {
         const setName_sql = `UPDATE user SET name = ? WHERE id = ?`;
         return this._query(setName_sql, [newName, id]);
-        // Ya no es necesario console.log aquí; el controlador lo hará.
     }
 
     // UPDATE: Cambia el nombre de usuario
@@ -52,7 +46,7 @@ class UserModel
     {
         const agregar_sql = `INSERT INTO user(name, username, email, password) VALUES (?, ?, ?, ?)`;
         const valores = [name, username, email, password];
-        return this._query(agregar_sql, valores); // Devuelve el objeto de resultado (incluyendo insertId)
+        return this._query(agregar_sql, valores); 
     }
 
     // READ: Listar todos los usuarios

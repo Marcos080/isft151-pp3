@@ -34,13 +34,13 @@
 }
 
 .btn-action {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     border: none;
     border-radius: 50%;
-    font-size: 2em;
+    font-size: 3em;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.432);
     transition: transform 0.2s;
     flex-shrink: 0; 
 }
@@ -50,11 +50,11 @@
 }
 
 .btn-dislike {
-    background-color: #f44336; 
-    color: white;
+    background-color: #db271a; 
+    color: rgb(255, 255, 255);
 }
 
 .btn-like {
-    background-color: #4CAF50; 
-    color: white;
+    background-color: #2ba82f; 
+    color: rgb(255, 255, 255);
 }

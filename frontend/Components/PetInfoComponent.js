@@ -1,4 +1,4 @@
-// PetInfoComponent.js
+// ejemplo de WC para la Descripcion
 
 class PetInfoComponent extends HTMLElement {
     constructor() {
@@ -24,25 +24,26 @@ class PetInfoComponent extends HTMLElement {
         const age = this.getAttribute('age') || 'N/A';
         const breed = this.getAttribute('breed') || 'N/A';
         const description = this.getAttribute('description') || 'Sin descripción.';
+        
 
         this.shadowRoot.innerHTML = `
             <style>
                 /* Estilo del Rectángulo Celeste */
                 .info-card {
-                    flex-grow: 1; /* Ocupa el espacio restante junto a los botones */
-                    background-color: #2a27b4ff; /* Color azul/celeste */
-                    color: white;
-                    padding: 15px;
+                    flex-grow: 5; /* Ocupa el espacio restante junto a los botones */
+                    background-color: #ffffffcc; /* Color azul/celeste */
+                    color: black;
+                    padding: 20px;
                     border-radius: 8px;
                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
                     text-align: left;
-                    max-height: 150px;
+                    max-height: 200px;
                     overflow: auto;
                 }
                 
                 .info-card h3 {
-                    margin: 0 0 5px 0;
-                    font-size: 1.5em;
+                    margin: 0 0 5px 0;s
+                    font-size: 2em;
                 }
                 
                 .info-card p {

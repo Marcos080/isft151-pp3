@@ -1,6 +1,3 @@
-//@param {object} UserModel - Instancia del modelo de usuario.
-//@returns {object} Un objeto con los métodos del controlador.
-
 module.exports = function(UserModel) {
     
     return {

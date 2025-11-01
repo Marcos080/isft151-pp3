@@ -1,4 +1,4 @@
-// PetMatcherComponent.js
+// Prototipo de WC para el match
 import './PetImageGalleryComponent.js'; 
 import './PetInfoComponent.js'; 
 
@@ -12,8 +12,8 @@ class PetMatcherComponent extends HTMLElement {
             name: "Firulais",
             age: 3,
             breed: "Labrador",
-            description: "Amigable y juguetón.",
-            photos: ["../img/asel.png", "/img/asel.png"]
+            description: "Divertido y lleno de energia. ",
+            photos: ["../img/prueba.png", "/img/b.png"]
         };
     }
 
@@ -44,7 +44,7 @@ class PetMatcherComponent extends HTMLElement {
 
     render() {
         this.shadowRoot.innerHTML = `
-            <link rel="stylesheet" href="/public/css/pet-matcher-styles.css">
+            <link rel="stylesheet" href="../public/css/pet-matcher-styles.css">
             
             <div class="pet-matcher-wrapper">
                 
@@ -64,10 +64,10 @@ class PetMatcherComponent extends HTMLElement {
                     
                     <div class="action-buttons">
                         <button id="btn-dislike" class="btn-action btn-dislike">
-                            ❌
+                            x
                         </button>
                         <button id="btn-like" class="btn-action btn-like">
-                            ➕
+                            +
                         </button>
                     </div>
 

@@ -11,20 +11,24 @@
 }
 
 /* Estilo del Rectángulo Celeste (User Greeting) */
-.user-greeting {
-    background-color: #00bcd4; /* Azul/Celeste fuerte */
-    color: white;
-    padding: 15px;
+.user-greeting-button {
+    width: 100%;
+    padding: 1px 1px;
+    background-color: #3f3f3f; /* Un color de botón sutil en el gris oscuro */
+    color: #e0e0e0;
+    border: none;
     border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
 }
 
-.user-greeting h3 {
-    margin: 0;
-    font-size: 1.2em;
-    font-weight: 500;
+.user-greeting-button:hover{
+    background-color: #555555;
 }
+
+
 
 /* Estilos de los botones de navegación */
 .menu-buttons {
