@@ -1,14 +1,11 @@
-const express = require('express');
-const router = express.Router();
+const express = require("express");
 
-module.exports = function(authController) {
-    
-    // Mapea la petición POST a /auth/register
-    router.post('/register', authController.register);
+module.exports = (authController) => {
+    const router = express.Router();
 
-    // Mapea la petición POST a /auth/login
-    router.post('/login', authController.login);
+    router.post("/login", authController.login);
+    router.post("/register", authController.register);
+    router.get("/verify", authController.isAuthenticated);
 
-    
     return router;
 };

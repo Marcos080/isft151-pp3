@@ -27,7 +27,7 @@ class PetController
             
         })
 
-        this.app.put("/user", async (req, res) =>
+        this.app.put("/pet", async (req, res) =>
         {
             try
             {
@@ -42,7 +42,7 @@ class PetController
             }
         })
 
-        this.app.get("/users", async (req, res) =>
+        this.app.get("/pets", async (req, res) =>
         {
             try{
                 let pets = await this.model.listar();
@@ -56,12 +56,12 @@ class PetController
             }
         })
 
-        this.app.get("/user/:id", async (req,res) =>
+        this.app.get("/pet/:username", async (req,res) =>
         {
             try
             {
-                const {id} = req.params;
-                let pet = await this.model.buscar(id);
+                const {username} = req.params;
+                let pet = await this.model.buscar(username);
                 res.json(pet);
                 console.log("mascota encontrada");
             }

@@ -1,8 +1,9 @@
 // DashboardComponent.js (FINALIZADO ESTRUCTURALMENTE)
 
-import { AuthService } from "../services/AuthService.js"; 
+// import { AuthService } from "../services/AuthService.js"; 
 import './SidebarComponent.js'; 
 import './PetMatcherComponent.js'; 
+import "./Pet-Menu.js"
 // Importaremos los otros componentes cuando los creemos
 // import './ChatsComponent.js'; 
 // import './PetMenuComponent.js'; 
@@ -78,6 +79,7 @@ class DashboardComponent extends HTMLElement {
                 // Se creará en el futuro
                 container.innerHTML = '<h2>Menú de Mascotas</h2><p>Aquí irá el componente de CRUD de mascotas propias.</p>';
                 // container.innerHTML = '<pet-menu-component></pet-menu-component>';
+                container.innerHTML = '<pet-menu></petmenu>';
                 break;
             default:
                 container.innerHTML = '<pet-matcher-component></pet-matcher-component>';
