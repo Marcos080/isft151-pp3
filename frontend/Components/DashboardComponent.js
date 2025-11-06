@@ -95,7 +95,7 @@ class DashboardComponent extends HTMLElement {
             <div class="dashboard-container">
                 <div class="sidebar">
                     <header>
-                        <h2>Dashboard</h2> 
+                        <h2>ISFT 151</h2> 
                         <button id="btn-logout">Cerrar Sesión</button>
                     </header>
                     

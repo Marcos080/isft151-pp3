@@ -22,39 +22,55 @@
 .pet-details-and-actions {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Distribuye el info-card y los botones */
+    justify-content: space-between;
     gap: 50px;
     width: 100%;
 }
 
+/* Nuevo ajuste para distribución correcta */
+.btn-dislike {
+    order: 1;            /* Va primero */
+    margin-right: auto;  /* Se pega a la izquierda */
+    background-color: #4e4e4e; 
+
+     box-shadow: 0 4px 8px rgba(255, 0, 0, 0.427);
+}
+
+.info-card {
+    order: 2;            /* Va en el centro */
+    flex: 0 1 350px;     /* No invade el espacio de los botones */
+    margin: 0 auto;      /* Se centra */
+}
+
+.btn-like {
+    order: 3;            /* Va último */
+    margin-left: auto;   /* Se pega a la derecha */
+    background-color: #4e4e4e; 
+
+     box-shadow: 0 4px 8px rgba(72, 255, 0, 0.4);
+}
+
 .action-buttons {
     display: flex;
-    gap: 10px;
-    flex-shrink: 0; /* Evita que los botones se encojan */
+    width: 100%;    
 }
 
 .btn-action {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     border: none;
     border-radius: 50%;
-    font-size: 2em;
+    font-size: 3em;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+   
     transition: transform 0.2s;
     flex-shrink: 0; 
+
+     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-action:hover {
     transform: scale(1.1);
-}
-
-.btn-dislike {
-    background-color: #f44336; 
-    color: white;
-}
-
-.btn-like {
-    background-color: #4CAF50; 
-    color: white;
 }

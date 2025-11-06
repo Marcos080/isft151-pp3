@@ -83,27 +83,32 @@ class PetMatcherComponent extends HTMLElement {
         const photos = JSON.stringify(pet.photos || ["/img/default.png"]);
 
         this.shadowRoot.innerHTML = `
-            <link rel="stylesheet" href="/public/css/pet-matcher-styles.css">
-            <div class="pet-matcher-wrapper">
-                <pet-image-gallery-component 
-                    pet-id="${pet.id}"
-                    photos='${photos}'
-                ></pet-image-gallery-component>
-                
-                <div class="pet-details-and-actions">
-                    <pet-info-component 
-                        name="${pet.name}"
-                        age="${pet.age}"
-                        breed="${pet.breed || 'Desconocida'}"
-                        description="${pet.description || 'Sin descripción.'}"
-                    ></pet-info-component>
-                    
-                    <div class="action-buttons">
-                        <button id="btn-dislike" class="btn-action btn-dislike">❌</button>
-                        <button id="btn-like" class="btn-action btn-like">💚</button>
-                    </div>
-                </div>
-            </div>
+             <link rel="stylesheet" href="/public/css/pet-matcher-styles.css">
+    <div class="pet-matcher-wrapper">
+
+        <pet-image-gallery-component 
+            pet-id="${pet.id}"
+            photos='${photos}'
+        ></pet-image-gallery-component>
+
+        <div class="pet-details-and-actions">
+
+            <!-- Botón rojo a la izquierda -->
+            <button id="btn-dislike" class="btn-action btn-dislike">❌</button>
+
+            <!-- Info-card en el centro -->
+            <pet-info-component 
+                class="info-card"
+                name="${pet.name}"
+                age="${pet.age}"
+                description="${pet.description || 'Sin descripción.'}"
+            ></pet-info-component>
+
+            <!-- Botón verde a la derecha -->
+            <button id="btn-like" class="btn-action btn-like">💚</button>
+
+        </div>
+    </div>
         `;
     }
 }

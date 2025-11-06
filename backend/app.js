@@ -27,12 +27,12 @@ const userModelInstance = new UserModel(conexion);
 const petModel = new PetModel(conexion);
 const chatModel = new ChatModel(conexion);
 
-// const query = ``;
+//const query = ``;
 
 // conexion.query(query, (error, result) =>
 // {
-    // if(error){ console.log(error)}
-    // if(result){ console.log("se borro");}
+//     if(error){ console.log(error)}
+//     if(result){ console.log("salio bien");}
 // });
 
 

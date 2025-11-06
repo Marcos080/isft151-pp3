@@ -55,3 +55,7 @@ funcion sera usar el "init" o funcion principal del repository.
 
 Por ultimo, ese "main" sera importado por un html que sera el que este en la 
 Ruts Raiz al ejecutar app.js.
+
+------------------------------------------------------------------------------------
+
+multer para las fotos

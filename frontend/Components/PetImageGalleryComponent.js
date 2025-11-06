@@ -70,48 +70,26 @@ class PetImageGalleryComponent extends HTMLElement {
         ).join('');
         
         this.shadowRoot.innerHTML = `
-            <style>
+           <style>
                 /* Estilos internos para la galería */
                 .gallery-container {
                     display: flex;
                     flex-direction: column;
-                    width: 100%;
+                    width: 400px;
                     aspect-ratio: 1 / 1;
                     background-color: white;
-                    border: 3px solid #7B68EE; /* Borde morado para destacar */
-                    border-radius: 8px;
+                    border: 3px solid #ffffffff; /* Borde morado para destacar */
+                    border-radius: 12px;
                     overflow: hidden;
-                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+                    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.28);
                 }
                 
-                .photo-indicators {
-                    display: flex;
-                    justify-content: center;
-                    gap: 5px;
-                    padding: 10px 10px 0;
-                    background: rgba(0, 0, 0, 0.7); /* Fondo oscuro para que se vean las barras */
-                    width: 100%;
-                    box-sizing: border-box;
-                }
                 
-                .photo-indicator {
-                    flex-grow: 1; /* Distribuye el espacio entre los indicadores (barras) */
-                    height: 8px;
-                    background-color: rgba(255, 255, 255, 0.5);
-                    border: none;
-                    cursor: pointer;
-                    transition: background-color 0.3s;
-                    border-radius: 4px;
-                }
-                
-                .photo-indicator.active {
-                    background-color: #FFFFFF; /* Indicador activo (blanco sólido) */
-                }
 
                 .main-photo {
                     width: 100%;
                     aspect-ratio: 1 / 1; /* La foto es un cuadrado perfecto */
-                    background-color: white; /* Color base del cuadrado blanco */
+                    background-color: grey; /* Color base del cuadrado blanco */
                     display: flex;
                     justify-content: center;
                     align-items: center;
@@ -126,9 +104,7 @@ class PetImageGalleryComponent extends HTMLElement {
             </style>
             
             <div class="gallery-container">
-                <div class="photo-indicators">
-                    ${indicatorsHtml}
-                </div>
+                
                 
                 <div class="main-photo">
                     <img id="pet-photo" src="${currentPhotoUrl}" alt="Foto de Mascota">
