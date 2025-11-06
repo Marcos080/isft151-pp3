@@ -1,3 +1,6 @@
+//@param {object} UserModel - Instancia del modelo de usuario.
+//@returns {object} Un objeto con los métodos del controlador.
+
 module.exports = function(UserModel) {
     
     return {
@@ -72,6 +75,22 @@ module.exports = function(UserModel) {
             } catch (error) {
                 console.error("Error al eliminar usuario:", error);
                 res.status(500).json({ message: "Error interno al eliminar usuario." });
+            }
+        },
+
+         // 🐾 [POST] /users/:id_user/follow/:id_pet (Seguir una mascota)
+        followUserPet: async (req, res) => {
+            try {
+                const { id_user, id_pet } = req.params;
+                const result = await UserModel.follow(id_user, id_pet);
+                
+                res.status(201).json({
+                    message: `El usuario ${id_user} ahora sigue a la mascota ${id_pet}`,
+                    result
+                });
+            } catch (error) {
+                console.error("Error al seguir mascota:", error);
+                res.status(500).json({ message: "Error interno al seguir mascota." });
             }
         }
     };

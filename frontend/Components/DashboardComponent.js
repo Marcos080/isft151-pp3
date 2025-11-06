@@ -1,9 +1,13 @@
- import './SidebarComponent.js'; 
+// DashboardComponent.js (FINALIZADO ESTRUCTURALMENTE)
+
+import { AuthService } from "../services/AuthService.js"; 
+import './SidebarComponent.js'; 
 import './PetMatcherComponent.js'; 
 import "./Pet-Menu.js"
+import "./Chat-Component.js";
 // Importaremos los otros componentes cuando los creemos
 // import './ChatsComponent.js'; 
-
+// import './PetMenuComponent.js'; 
 
 
 class DashboardComponent extends HTMLElement {
@@ -17,6 +21,7 @@ class DashboardComponent extends HTMLElement {
     }
 
     connectedCallback() {
+        this.mostrar();
         this.render();
         this.addEventListeners();
     }
@@ -70,7 +75,7 @@ class DashboardComponent extends HTMLElement {
             case 'chats':
                 // Se creará en el futuro
                 container.innerHTML = '<h2>Sección de Chats</h2><p>Aquí irá el componente de Chats.</p>'; 
-                // container.innerHTML = '<chats-component></chats-component>';
+                container.innerHTML = '<chat-component conversation-id="1" user-id="4"></chat-component>';
                 break;
             case 'pets-menu':
                 // Se creará en el futuro
@@ -90,7 +95,7 @@ class DashboardComponent extends HTMLElement {
             <div class="dashboard-container">
                 <div class="sidebar">
                     <header>
-                        <h2>Bienvenido</h2> 
+                        <h2>Dashboard</h2> 
                         <button id="btn-logout">Cerrar Sesión</button>
                     </header>
                     
@@ -105,6 +110,21 @@ class DashboardComponent extends HTMLElement {
         // Llama al sub-router para cargar la vista inicial (matcher)
         this.renderActiveComponent();
     }
+
+   // EN DashboardComponent.js
+
+   mostrar()
+   {
+    const user = AuthService.getUserFromToken();
+
+    if (user) {
+    
+    console.log("Usuario logueado:", user.username);
+    console.log("ID de usuario:", user.id);
+    }
+   }
+    
+    
 }
 
 customElements.define("dashboard-component", DashboardComponent);

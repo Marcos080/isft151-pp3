@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+//Función que recibe el Controlador y mapea las rutas.
+//@param {object} userController - El objeto con las funciones del controlador.
+//@returns {object} El router de Express listo para ser usado.
+
 module.exports = function(userController) {
     
     router.get('/', userController.getAllUsers);
@@ -12,6 +16,8 @@ module.exports = function(userController) {
     router.put('/:id/name', userController.updateUserName); 
     
     router.delete('/:id', userController.deleteUser);
+
+    router.post("/:id_user/follow/:id_pet", userController.followUserPet);
     
     return router;
 };

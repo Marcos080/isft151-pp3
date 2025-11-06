@@ -1,4 +1,5 @@
-//ejemplo de WC para la imagen
+// PetImageGalleryComponent.js
+
 class PetImageGalleryComponent extends HTMLElement {
     constructor() {
         super();
@@ -22,6 +23,7 @@ class PetImageGalleryComponent extends HTMLElement {
                 this.photos = [];
             }
         } else if (name === 'pet-id' && oldValue !== newValue) {
+            // Reiniciar el índice de imagen al cambiar de mascota
             this.currentImageIndex = 0;
             this.petId = newValue;
             this.render();
@@ -62,7 +64,7 @@ class PetImageGalleryComponent extends HTMLElement {
     }
 
     render() {
-        const currentPhotoUrl = this.photos[this.currentImageIndex] || 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20200%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_16e6d0130f1%20text%20%7B%20fill%3A%23AAAAAA%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_16e6d0130f1%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23EEEEEE%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2257.4%22%20y%3D%22104.9%22%3EFoto%20de%20Mascota%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E';
+        const currentPhotoUrl = this.photos[this.currentImageIndex] || 'placeholder.jpg';
         const indicatorsHtml = this.photos.map((_, index) => 
             `<button class="photo-indicator ${index === this.currentImageIndex ? 'active' : ''}" data-index="${index}"></button>`
         ).join('');
@@ -73,10 +75,10 @@ class PetImageGalleryComponent extends HTMLElement {
                 .gallery-container {
                     display: flex;
                     flex-direction: column;
-                    width: 400px;
+                    width: 100%;
                     aspect-ratio: 1 / 1;
                     background-color: white;
-                    border: 3px solid #2213ff85; /* Borde morado para destacar */
+                    border: 3px solid #7B68EE; /* Borde morado para destacar */
                     border-radius: 8px;
                     overflow: hidden;
                     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
@@ -93,13 +95,13 @@ class PetImageGalleryComponent extends HTMLElement {
                 }
                 
                 .photo-indicator {
-                    flex-grow: 5; /* Distribuye el espacio entre los indicadores (barras) */
-                    height: 12px;
+                    flex-grow: 1; /* Distribuye el espacio entre los indicadores (barras) */
+                    height: 8px;
                     background-color: rgba(255, 255, 255, 0.5);
                     border: none;
                     cursor: pointer;
                     transition: background-color 0.3s;
-                    border-radius: 10px;
+                    border-radius: 4px;
                 }
                 
                 .photo-indicator.active {
@@ -109,7 +111,7 @@ class PetImageGalleryComponent extends HTMLElement {
                 .main-photo {
                     width: 100%;
                     aspect-ratio: 1 / 1; /* La foto es un cuadrado perfecto */
-                    background-color: grey; /* Color base del cuadrado blanco */
+                    background-color: white; /* Color base del cuadrado blanco */
                     display: flex;
                     justify-content: center;
                     align-items: center;
@@ -133,6 +135,7 @@ class PetImageGalleryComponent extends HTMLElement {
                 </div>
             </div>
         `;
+        // Los event listeners deben re-adjuntarse si el renderizado cambia el DOM.
         this.addEventListeners(); 
     }
 }

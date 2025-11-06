@@ -7,3 +7,5 @@ npm install express mysql2 dotenv //para instalar el servidor http, el driver a 
 Por ahora uso CommonJS porque se me hace mas comodo pero si quiero usar ESM tengo que poner  "type": "module", en package(.json)
 
 Poner comillas invertidas en los scripts-sql en js
+
+npm install jwt-decode

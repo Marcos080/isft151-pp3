@@ -16,11 +16,9 @@ class SidebarComponent extends HTMLElement {
     addEventListeners() {
         const chatButton = this.shadowRoot.querySelector('#btn-chats');
         const petsMenuButton = this.shadowRoot.querySelector('#btn-pets-menu');
-        const matcherButton = this.shadowRoot.querySelector('#btn-matcher');
 
         chatButton.addEventListener('click', () => this.handleNavigation('chats'));
         petsMenuButton.addEventListener('click', () => this.handleNavigation('pets-menu'));
-        matcherButton.addEventListener('click', () => this.handleNavigation('matcher'));
     }
 
     handleNavigation(view) {
@@ -42,10 +40,10 @@ class SidebarComponent extends HTMLElement {
             <link rel="stylesheet" href="/public/css/sidebar-styles.css">
             
             <div class="sidebar-content">
-                       
-            <button id="btn-matcher" class="user-greeting-button">
-                    <h3>Mascotas publicadas</h3> 
-                </button>
+                
+                <div class="user-greeting">
+                    <h3>¡Bienvenido, ${this.userName}!</h3>
+                </div>
 
                 <div class="menu-buttons">
                     <button id="btn-chats" class="nav-button">

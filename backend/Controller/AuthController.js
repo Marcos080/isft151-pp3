@@ -3,6 +3,7 @@ const { promisify } = require("util");
 
 module.exports = function(UserModel) {
 
+    // 🔐 Login de usuario
     const login = async (req, res) => {
         try {
             const { username, password } = req.body;
@@ -26,6 +27,7 @@ module.exports = function(UserModel) {
         }
     };
 
+    // 🧍 Registrar nuevo usuario
     const register = async (req, res) => {
         try {
             const { name, username, email, password } = req.body;
@@ -40,8 +42,9 @@ module.exports = function(UserModel) {
         }
     };
 
+    // 🧠 Verifica si el usuario sigue autenticado
     const isAuthenticated = async (req, res) => {
-        const token = req.cookies.jwt;
+        const token = req.cookies.jwt || req.headers["authorization"]?.split(" ")[1];
         if (!token) return res.status(200).json({ valid: false });
 
         try {
@@ -55,5 +58,22 @@ module.exports = function(UserModel) {
         }
     };
 
-    return { login, register, isAuthenticated };
+    // 🚨 Middleware para verificar token en rutas protegidas
+    const verificarToken = async (req, res, next) => {
+        try {
+            const token = req.cookies.jwt || req.headers["authorization"]?.split(" ")[1];
+            if (!token) {
+                return res.status(401).json({ error: "Token no proporcionado." });
+            }
+
+            const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRETO);
+            req.user = decoded; // guarda los datos (id, username)
+            next();
+        } catch (error) {
+            return res.status(403).json({ error: "Token inválido o expirado." });
+        }
+    };
+
+    // 👇 Exportás las funciones y el middleware
+    return { login, register, isAuthenticated, verificarToken };
 };

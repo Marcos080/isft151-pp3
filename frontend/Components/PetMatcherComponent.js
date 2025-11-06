@@ -1,76 +1,107 @@
-// Prototipo de WC para el match
 import './PetImageGalleryComponent.js'; 
 import './PetInfoComponent.js'; 
+import { UserService } from '../services/UserService.js';
+import { PetService } from '../services/PetService.js'; // ⬅️ nuevo
+import { AuthService } from '../services/AuthService.js';
 
 class PetMatcherComponent extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
-        // Datos de ejemplo para inicialización (serán reemplazados por el servicio)
-        this.currentPet = {
-            id: 1,
-            name: "Firulais",
-            age: 3,
-            breed: "Labrador",
-            description: "Divertido y lleno de energia. ",
-            photos: ["../img/prueba.png", "/img/b.png"]
-        };
+        this.currentUserId = AuthService.getUserFromToken().id; // usuario simulado
+        this.pets = []; // todas las mascotas
+        this.currentIndex = 0; // índice actual
     }
 
-    connectedCallback() {
-        this.render();
+    async connectedCallback() {
+        await this.loadPets(); // carga las mascotas
+        this.render();         // muestra la primera
         this.addEventListeners();
-        // Aquí se llamaría a PetService.fetchNextPet();
+    }
+
+    async loadPets() {
+        try {
+            this.pets = await PetService.fetchAllPets();
+            if (this.pets.length === 0) {
+                this.currentPet = null;
+                console.warn("⚠️ No hay mascotas disponibles");
+            } else {
+                this.currentPet = this.pets[this.currentIndex];
+            }
+        } catch (error) {
+            console.error("Error al cargar mascotas:", error);
+        }
     }
 
     addEventListeners() {
-        const likeButton = this.shadowRoot.querySelector('#btn-like');
-        const dislikeButton = this.shadowRoot.querySelector('#btn-dislike');
-
-        likeButton.addEventListener('click', () => this.handleMatchAction('like'));
-        dislikeButton.addEventListener('click', () => this.handleMatchAction('dislike'));
+        this.shadowRoot.addEventListener('click', async (e) => {
+            if (e.target.id === 'btn-like') {
+                await this.handleMatchAction('like');
+            } else if (e.target.id === 'btn-dislike') {
+                await this.handleMatchAction('dislike');
+            }
+        });
     }
 
-    handleMatchAction(action) {
+    async handleMatchAction(action) {
+        if (!this.currentPet) return;
+
         console.log(`Acción en mascota ${this.currentPet.id}: ${action}`);
-        
-        // 1. Llamar al servicio (PetService.likePet(id) o PetService.dislikePet(id))
-        
-        // 2. Cargar la siguiente mascota (PetService.fetchNextPet())
-        // Por ahora, solo simulación:
-        alert(`${action.toUpperCase()} a ${this.currentPet.name}. Cargando siguiente...`);
-        // this.loadNextPet(); 
+
+        if (action === 'like') {
+            try {
+                const response = await UserService.likePet(this.currentUserId, this.currentPet.id);
+                console.log("Respuesta del servidor:", response);
+                alert(`Seguiste a ${this.currentPet.name}`);
+            } catch (error) {
+                alert("Hubo un error al seguir la mascota.");
+            }
+        }
+
+        this.showNextPet();
+    }
+
+    showNextPet() {
+        this.currentIndex++;
+
+        if (this.currentIndex >= this.pets.length) {
+            this.currentPet = null;
+            this.shadowRoot.innerHTML = `<p>No hay más mascotas disponibles 🐶🐱</p>`;
+        } else {
+            this.currentPet = this.pets[this.currentIndex];
+            this.render();
+        }
     }
 
     render() {
+        if (!this.currentPet) {
+            this.shadowRoot.innerHTML = `<p>Cargando mascotas...</p>`;
+            return;
+        }
+
+        const pet = this.currentPet;
+        const photos = JSON.stringify(pet.photos || ["/img/default.png"]);
+
         this.shadowRoot.innerHTML = `
-            <link rel="stylesheet" href="../public/css/pet-matcher-styles.css">
-            
+            <link rel="stylesheet" href="/public/css/pet-matcher-styles.css">
             <div class="pet-matcher-wrapper">
-                
                 <pet-image-gallery-component 
-                    pet-id="${this.currentPet.id}"
-                    photos='${JSON.stringify(this.currentPet.photos)}'
+                    pet-id="${pet.id}"
+                    photos='${photos}'
                 ></pet-image-gallery-component>
                 
                 <div class="pet-details-and-actions">
-                    
                     <pet-info-component 
-                        name="${this.currentPet.name}"
-                        age="${this.currentPet.age}"
-                        breed="${this.currentPet.breed}"
-                        description="${this.currentPet.description}"
+                        name="${pet.name}"
+                        age="${pet.age}"
+                        breed="${pet.breed || 'Desconocida'}"
+                        description="${pet.description || 'Sin descripción.'}"
                     ></pet-info-component>
                     
                     <div class="action-buttons">
-                        <button id="btn-dislike" class="btn-action btn-dislike">
-                            x
-                        </button>
-                        <button id="btn-like" class="btn-action btn-like">
-                            +
-                        </button>
+                        <button id="btn-dislike" class="btn-action btn-dislike">❌</button>
+                        <button id="btn-like" class="btn-action btn-like">💚</button>
                     </div>
-
                 </div>
             </div>
         `;
