@@ -60,25 +60,36 @@ class ChatModel {
   // 📜 Obtener mensajes
   getMessages(conversationId) {
     return new Promise((resolve, reject) => {
-      const sql = `SELECT id, id_sender, content, created_at FROM message WHERE id_conversation = ? ORDER BY created_at ASC`;
+      const sql = `SELECT m.*, u.username AS sender_name
+             FROM message m
+             JOIN user u ON u.id = m.id_sender
+             WHERE id_conversation = ?
+             ORDER BY m.created_at ASC`;
+
       this.conexion.query(sql, [conversationId], (error, result) => {
-        if (error) return reject(error);
-        resolve(result);
+        if (error){ reject(error); };
+
+        if(result){console.log("mensajes encontrados"); resolve(result);};
+
       });
     });
   }
 
-  // 🔹 Obtener dueño de mascota
-  // getPetOwner(id_pet) {
-  //   return new Promise((resolve, reject) => {
-  //     const sql = `SELECT id_owner FROM pet WHERE id = ?`;
-  //     this.conexion.query(sql, [id_pet], (error, result) => {
-  //       if (error) return reject(error);
-  //       if (!result.length) return resolve(null);
-  //       resolve(result[0].id_owner);
-  //     });
-  //   });
-  // }
+
+  conversationExists(id_conversation) {
+    return new Promise((resolve, reject) =>
+    {
+      const sql = `SELECT id FROM conversation WHERE id = ?`
+
+      this.conexion.execute(sql, [id_conversation], (error, result) =>
+      {
+        if(error){ console.log("error al ckekear conversasion"); reject(error);}
+
+        if(result){ console.log("conversation exists salio bien"); resolve(result.length > 0);}
+
+      });
+    })
+    }
 
   // 🐾 Obtener mascotas seguidas y sus dueños
   getFollowedPetsWithOwners(id_user) {
@@ -96,6 +107,52 @@ class ChatModel {
       });
     });
   }
+
+getUserConversations(id_user) {
+  return new Promise((resolve, reject) => {
+    const sql = `
+      SELECT 
+        c.id AS conversation_id,
+        c.id_pet,
+        p.name AS pet_name,
+        u1.username AS user1_name,
+        u2.username AS user2_name,
+        c.created_at
+      FROM conversation c
+      JOIN user u1 ON c.id_user1 = u1.id
+      JOIN user u2 ON c.id_user2 = u2.id
+      JOIN pet p ON c.id_pet = p.id
+      WHERE c.id_user1 = ? OR c.id_user2 = ?
+      ORDER BY c.created_at DESC;
+    `;
+    this.conexion.query(sql, [id_user, id_user], (error, result) => {
+      if (error) return reject(error);
+      resolve(result);
+    });
+  });
+}
+
+buscarDueño(id_pet)
+{
+  return new Promise((resolve, reject) =>
+  {
+    const buscar = `SELECT p.id AS id_pet, p.name AS pet_name, p.id_owner, u.username AS owner_name
+         FROM pet p
+         JOIN user u ON p.id_owner = u.id
+         WHERE p.id = ?`;
+
+    this.conexion.query(buscar, [id_pet], (error, result) =>
+    {
+      if(error){ console.log("error al buscar"+ error); reject(error);}
+
+      if(result){ console.log("encontrado"); resolve(result);}
+    })
+  })
+}
+
+
+
+
 }
 
 module.exports = { ChatModel };

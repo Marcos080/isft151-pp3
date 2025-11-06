@@ -48,6 +48,7 @@ export class AuthService {
     static logout() {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+        console.log("token borrado");
     }
 
     // ⚙️ Método auxiliar: obtiene el token actual

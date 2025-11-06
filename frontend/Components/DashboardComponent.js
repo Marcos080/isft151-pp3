@@ -49,7 +49,7 @@ class DashboardComponent extends HTMLElement {
 
     handleLogout() {
         // Lógica de logout (llamar a AuthService, limpiar tokens, etc.)
-        // AuthService.logout(); 
+        AuthService.logout(); 
 
         const navigateEvent = new CustomEvent('navigate', {
             bubbles: true, 
