@@ -112,9 +112,21 @@ class PetModel
 
             if(result) {console.log("mascota eliminado: ", id); resolve(result);};
         })
-    })
+        })
     
-}
+    }
+
+    setPhotoUrl(id, photoUrl) {
+    return new Promise((resolve, reject) => {
+        const sql = `UPDATE pet SET photo_url = ? WHERE id = ?`;
+        this.conexion.query(sql, [photoUrl, id], (error, result) => {
+            if (error) { console.error("Error al guardar la foto:", error); return reject(error); }
+            console.log("Foto actualizada correctamente para la mascota:", id);
+            resolve(result);
+        });
+    });
+ }
+ 
 
         
 }

@@ -31,8 +31,8 @@ const chatModel = new ChatModel(conexion);
 
 // conexion.query(query, (error, result) =>
 // {
-    // if(error){ console.log(error)}
-    // if(result){ console.log("se borro");}
+//     if(error){ console.log(error)}
+//     if(result){ console.log("quedo");}
 // });
 
 
@@ -50,6 +50,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.static(path.join(__dirname, "..", "frontend")));
 
 
