@@ -1,31 +1,10 @@
-//me falta cambiar los setter en promesas
+
 class PetModel
 {
     constructor(conexion)
     {
         this.conexion = conexion
 
-        const tabla = `
-            CREATE TABLE IF NOT EXISTS pet (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            id_owner INT NOT NULL,
-            name VARCHAR(255) NOT NULL,
-            age INT NOT NULL,
-            description VARCHAR(255) NOT NULL,
-            image VARCHAR(500) DEFAULT NULL,
-
-            FOREIGN KEY (id_owner) REFERENCES user(id) ON DELETE CASCADE
-
-            );`
-
-        this.conexion.query(tabla, (error, result) =>
-            {
-            if(error){console.error("error al conectarse a la tabla pet:", error);}
-
-            if(result){console.log("conectado a la tabla pet");}
-
-            }
-        )
     }
 
     setName(id, newName)
@@ -119,7 +98,9 @@ class PetModel
 
     setPhotoUrl(id, photoUrl) {
     return new Promise((resolve, reject) => {
+
         const sql = `UPDATE pet SET image = ? WHERE id = ?`;
+
         this.conexion.query(sql, [photoUrl, id], (error, result) => {
             if (error) { console.error("Error al guardar la foto:", error); return reject(error); }
             console.log("Foto actualizada correctamente para la mascota:", id);
