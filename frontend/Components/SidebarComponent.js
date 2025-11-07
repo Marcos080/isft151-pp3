@@ -1,5 +1,3 @@
-// SidebarComponent.js
-
 class SidebarComponent extends HTMLElement {
     constructor() {
         super();
@@ -24,12 +22,8 @@ class SidebarComponent extends HTMLElement {
     }
 
     handleNavigation(view) {
-        // Por ahora, solo logueamos la acción. 
-        // Más adelante, podríamos despachar un evento 'sidebar-navigate' 
-        // para cambiar la vista interna del Dashboard.
         console.log(`Navegación interna solicitada: ${view}`);
 
-        // Opcional: Despachar evento personalizado para navegación interna
         this.dispatchEvent(new CustomEvent('sidebar-navigate', {
             detail: { view: view },
             bubbles: true,

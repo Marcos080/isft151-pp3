@@ -1,13 +1,8 @@
-// DashboardComponent.js (FINALIZADO ESTRUCTURALMENTE)
-
 import { AuthService } from "../services/AuthService.js"; 
 import './SidebarComponent.js'; 
 import './PetMatcherComponent.js'; 
 import "./Pet-Menu.js"
 import "./Chat-Component.js";
-// Importaremos los otros componentes cuando los creemos
-// import './ChatsComponent.js'; 
-// import './PetMenuComponent.js'; 
 
 
 class DashboardComponent extends HTMLElement {
