@@ -37,7 +37,7 @@ class PetMenuComponent extends HTMLElement {
     async fetchPets() {
         if (!this.username) return;
         try {
-            const res = await fetch(`/pets?username=${this.username}`, {
+            const res = await fetch(`/pet/own_pets/${this.userId}`, {
                 headers: AuthService.getAuthHeaders()
             });
             if (!res.ok) throw new Error("Error al listar mascotas");

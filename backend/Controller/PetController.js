@@ -73,10 +73,21 @@ class PetController
                 res.status(500).json({error: "error en la base de datos"});
             }
         })
+
+        this.app.get("/pet/own_pets/:id", async (req, res) =>
+        {
+            try {
+            const { id } = req.params;
+            const pets = await this.model.listarMascotasDelUsuario(id);
+            res.json(pets);
+            console.log("Mascotas encontradas");
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Error en la base de datos" });
+        }
+        })
     
-        this.app.post(
-    "/pet/:id/photo",
-    upload.single("photo"),
+        this.app.post("/pet/:id/photo", upload.single("photo"),
     async (req, res) => {
         try {
             const { id } = req.params;

@@ -63,6 +63,22 @@ class PetModel
     })
     }
 
+    listarMascotasDelUsuario(id_owner)
+    {
+        return new Promise((resolve, reject) =>
+        {
+        const listar_sql = `SELECT * FROM pet WHERE id_owner = ?`;
+
+        this.conexion.query(listar_sql, [id_owner], (error, result) => 
+        {
+            if(error) {console.error("error: ", error); reject(error);}
+
+            if(result){console.log("mascotas encontrados"); resolve(result);}
+
+        })
+    })
+    }
+
     buscar(id)
     {
         return new Promise((resolve, reject) =>
