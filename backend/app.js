@@ -28,7 +28,7 @@ const petModel = new PetModel(conexion);
 const chatModel = new ChatModel(conexion);
 
 
-// const sql = `ALTER TABLE pet MODIFY COLUMN image VARCHAR(500) DEFAULT NULL;`
+// const sql = ``;
 
 // conexion.query(sql, (error, result) =>
 // {

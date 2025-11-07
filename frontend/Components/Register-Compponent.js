@@ -59,7 +59,7 @@ class RegisterComponent extends HTMLElement {
 
     render() {
         this.shadowRoot.innerHTML = `
-            <link rel="stylesheet" href="/public/css/register-syle.css"> 
+            <link rel="stylesheet" href="/public/css/register-style.css"> 
             
             <div class="login-page-wrapper">
                 <div class="login-container">

@@ -202,7 +202,9 @@ class PetMenuComponent extends HTMLElement {
 
     render() {
         this.shadowRoot.innerHTML = `
-            <link rel="stylesheet" href="/public/css/pet-matcher-styles.css">
+          
+            <link rel="stylesheet" href="/public/css/menu-styles.css">
+
             <div class="pet-matcher-container">
                 <h2>Mis Mascotas</h2>
                 <form id="add-pet-form">
@@ -213,26 +215,7 @@ class PetMenuComponent extends HTMLElement {
                 </form>
                 <div id="pets-list" class="pets-list"></div>
             </div>
-            <style>
-                .pet-matcher-container { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-                form { display: flex; gap: 10px; margin-bottom: 20px; }
-                input { flex: 1; padding: 8px; }
-                button { padding: 8px 12px; background: #007bff; border: none; color: white; border-radius: 6px; cursor: pointer; }
-                .pets-list { display: grid; gap: 15px; }
-                .pet-card { background: #f8f9fa; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
-                .delete-btn { background: #dc3545; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; }
-                .upload-btn { background: #28a745; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; margin-right: 5px; }
-                .error { color: red; }
-
-                .pet-photo {
-                    max-width: 100px;
-                    max-height: 100px;
-                    border-radius: 8px;
-                    object-fit: cover;
-                    display: block;
-                    margin-bottom: 5px;
-                }
-            </style>
+            
         `;
     }
 }

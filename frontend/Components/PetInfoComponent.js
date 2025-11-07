@@ -25,31 +25,9 @@ class PetInfoComponent extends HTMLElement {
         const description = this.getAttribute('description') || 'Sin descripción.';
 
         this.shadowRoot.innerHTML = `
-              <style>
-                .info-card {
-                flex: 1;                 /* Se adapta sin empujar a los botones */
-                max-width: 350px;        /* Tamaño razonable para que quede en el centro */
-                background-color: #ffffffcc;
-                color: black;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-                text-align: left;
-                max-height: 200px;
-                overflow: auto;
-                }
 
-               .info-card h3 {
-                 margin: 0 0 5px 0;
-                 font-size: 2em;
-               }
+         <link rel="stylesheet" href="/public/css/petInfo-styles.css">
 
-               .info-card p {
-                 margin: 2px 0;
-                 font-size: 0.95em;
-                }
-
-            </style>
             
             <div class="info-card">
                 <h3>${name}, ${age} años</h3>

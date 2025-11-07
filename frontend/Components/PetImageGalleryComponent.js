@@ -70,38 +70,8 @@ class PetImageGalleryComponent extends HTMLElement {
         ).join('');
         
         this.shadowRoot.innerHTML = `
-           <style>
-                /* Estilos internos para la galería */
-                .gallery-container {
-                    display: flex;
-                    flex-direction: column;
-                    width: 400px;
-                    aspect-ratio: 1 / 1;
-                    background-color: white;
-                    border: 3px solid #ffffffff; /* Borde morado para destacar */
-                    border-radius: 12px;
-                    overflow: hidden;
-                    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.28);
-                }
-                
-                
 
-                .main-photo {
-                    width: 100%;
-                    aspect-ratio: 1 / 1; /* La foto es un cuadrado perfecto */
-                    background-color: grey; /* Color base del cuadrado blanco */
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    overflow: hidden;
-                }
-                
-                #pet-photo {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover; /* Asegura que la imagen cubra todo el cuadrado */
-                }
-            </style>
+         <link rel="stylesheet" href="/public/css/petImage-styles.css">
             
             <div class="gallery-container">
                 
