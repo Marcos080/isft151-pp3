@@ -47,12 +47,13 @@ const authRouter = authRoutesFactory(authController);
 
 // Servidor Express
 const app = express();
-new PetController(app, petModel);
-
-
+// Middlewares (deben registrarse antes de montar controladores que usan req.body)
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
+
+// 🐾 Controlador de mascotas (ahora que los middlewares están registrados)
+new PetController(app, petModel);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.static(path.join(__dirname, "..", "frontend")));
 
@@ -77,7 +78,7 @@ const { verificarToken } = authController;
 // app.use("/chat", verificarToken);
 
 // 🐾 Controlador de mascotas
-
+// Controlador de chats
 new ChatController(app, chatModel);
 
 

@@ -2,6 +2,7 @@ import './PetImageGalleryComponent.js';
 import './PetInfoComponent.js'; 
 import { UserService } from '../services/UserService.js';
 import { PetService } from '../services/PetService.js'; 
+import { ChatService } from '../services/ChatService.js';
 import { AuthService } from '../services/AuthService.js';
 
 class PetMatcherComponent extends HTMLElement {
@@ -59,6 +60,13 @@ class PetMatcherComponent extends HTMLElement {
                 const response = await UserService.likePet(this.currentUserId, this.currentPet.id);
                 console.log("Respuesta del servidor:", response);
                 alert(`Seguiste a ${this.currentPet.name}`);
+                // Intentamos iniciar o buscar la conversación inmediatamente
+                try {
+                    const conv = await ChatService.startConversation(this.currentUserId, this.currentPet.id);
+                    console.log("Conversación iniciada/recuperada:", conv);
+                } catch (err) {
+                    console.warn("No se pudo iniciar la conversación automáticamente:", err);
+                }
             } catch (error) {
                 alert("Hubo un error al seguir la mascota.");
             }
