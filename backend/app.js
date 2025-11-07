@@ -1,8 +1,6 @@
 const { conectar, conexion } = require("./db/db");
 const express = require("express");
-const cors = require("cors");
 const path = require("path");
-const cookieParser = require("cookie-parser");
 
 // MODELOS
 const { UserModel } = require("./model/UserModel");
@@ -16,8 +14,7 @@ const authControllerFactory = require("./Controller/AuthController");
 const authRoutesFactory = require("./router/authRoutes");
 const { PetController } = require("./Controller/PetController");
 const {ChatController} = require("./Controller/ChatController");
-const { rejects } = require("assert");
-// const chatRouter = require("./router/ChatRoutes");
+
 
 // Conexión a la BD
 conectar();
@@ -26,16 +23,6 @@ conectar();
 const userModelInstance = new UserModel(conexion);
 const petModel = new PetModel(conexion);
 const chatModel = new ChatModel(conexion);
-
-
-// const sql = ``;
-
-// conexion.query(sql, (error, result) =>
-// {
-//     if(error){console.log(error);}
-//     console.log("bien");
-// })
-
 
 // CONTROLADORES
 const userController = userControllerFactory(userModelInstance);
@@ -47,40 +34,21 @@ const authRouter = authRoutesFactory(authController);
 
 // Servidor Express
 const app = express();
-// Middlewares (deben registrarse antes de montar controladores que usan req.body)
 app.use(express.json());
-app.use(cors());
-app.use(cookieParser());
 
-// 🐾 Controlador de mascotas (ahora que los middlewares están registrados)
 new PetController(app, petModel);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.static(path.join(__dirname, "..", "frontend")));
-
-
 
 // 🚀 RUTA PRINCIPAL (SPA)
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "frontend", "static", "index.html"));
 });
 
-// 📡 API: rutas públicas
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
 
-
-// 🧩 Extraemos la función de verificación desde el authController
-const { verificarToken } = authController;
-
-// 🔒 RUTAS PROTEGIDAS: aplicar middleware a las rutas de mascotas
-// app.use("/pet");
-// app.use("/pets");
-// app.use("/chat", verificarToken);
-
-// 🐾 Controlador de mascotas
-// Controlador de chats
 new ChatController(app, chatModel);
-
 
 // SPA fallback: permite refrescar o navegar dentro del SPA sin errores 404
 app.use((req, res, next) => {
@@ -93,5 +61,4 @@ app.use((req, res, next) => {
     }
 });
 
-// Iniciar servidor
 app.listen(3000, () => console.log("✅ Servidor corriendo en http://localhost:3000"));

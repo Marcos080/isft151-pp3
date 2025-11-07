@@ -19,7 +19,6 @@ module.exports = function(UserModel) {
                 { expiresIn: process.env.JWT_TIEMPO_EXPIRA || "1h" }
             );
 
-            res.cookie("jwt", token, { httpOnly: true });
             res.json({ success: true, message: "Login exitoso", token });
         } catch (error) {
             console.error(error);
@@ -44,7 +43,7 @@ module.exports = function(UserModel) {
 
     // 🧠 Verifica si el usuario sigue autenticado
     const isAuthenticated = async (req, res) => {
-        const token = req.cookies.jwt || req.headers["authorization"]?.split(" ")[1];
+        const token = req.headers["authorization"]?.split(" ")[1];
         if (!token) return res.status(200).json({ valid: false });
 
         try {
@@ -61,7 +60,7 @@ module.exports = function(UserModel) {
     // 🚨 Middleware para verificar token en rutas protegidas
     const verificarToken = async (req, res, next) => {
         try {
-            const token = req.cookies.jwt || req.headers["authorization"]?.split(" ")[1];
+            const token = req.headers["authorization"]?.split(" ")[1];
             if (!token) {
                 return res.status(401).json({ error: "Token no proporcionado." });
             }
