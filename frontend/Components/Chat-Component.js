@@ -32,9 +32,8 @@ export class ChatComponent extends HTMLElement {
       container.innerHTML = chats
         .map(
           (chat) => `
-            <div class="chat-item" data-conversation-id="${chat.conversation_id}" data-pet-name="${chat.pet_name}" data-owner-name="${chat.owner_name}">
-              🐶 ${chat.pet_name} 
-              <small>(${chat.owner_name === this.user.username ? "Dueño" : "Con " + chat.owner_name})</small>
+            <div class="chat-item" data-conversation-id="${chat.conversation_id}" data-pet-name="${chat.pet_name}" >
+               🦴  ${chat.pet_name} 
             </div>
           `
         )
@@ -50,7 +49,7 @@ export class ChatComponent extends HTMLElement {
         });
       });
     } catch (err) {
-      console.error("❌ Error al cargar chats:", err);
+      console.error(" Error al cargar chats:", err);
       container.innerHTML = `<p>Error al cargar chats: ${err.message}</p>`;
     }
   }
@@ -63,36 +62,42 @@ export class ChatComponent extends HTMLElement {
 
       // Renderizamos el componente de mensajes
       chatContainer.innerHTML = `
-        <h3>🐾 Chat sobre ${petName} (con ${ownerName})</h3>
+        <h3>🐾 Chat sobre ${petName} </h3>
         <message-component conversation-id="${conversationId}"></message-component>
       `;
     } catch (err) {
-      console.error("❌ Error al abrir conversación:", err);
+      console.error(" Error al abrir conversación:", err);
       const chatContainer = this.shadowRoot.querySelector(".chat-area");
       chatContainer.innerHTML = `<p>Error al abrir conversación: ${err.message}</p>`;
     }
   }
 
-  // 🔹 Render básico
+
   render() {
     this.shadowRoot.innerHTML = `
       <style>
         .chat-container {
-          display: grid;
+          display: flex;
           grid-template-columns: 30% 70%;
           height: 600px;
           width: 1000px;
-          border: 1px solid #ccc;
+          border: 1px solid #ff9500ff;
           border-radius: 10px;
           overflow: hidden;
           font-family: sans-serif;
+
+          box-shadow: 0 0 20px 5px rgba(255, 98, 0, 0.9); ;
         }
 
         .chat-list {
-          border-right: 1px solid #ccc;
+          border-right: 1px solid #ff9500ff;
           overflow-y: auto;
           padding: 10px;
-          background: #f9f9f9;
+          background: #2e2e2e;
+
+           flex: 0 0 30%;  /* ancho fijo 30%, no crece ni se encoge */
+
+   
         }
 
         .chat-item {
@@ -104,14 +109,17 @@ export class ChatComponent extends HTMLElement {
         }
 
         .chat-item:hover {
-          background: #e8f0fe;
+          background: #ff6200e6;
         }
 
         .chat-area {
           padding: 15px;
-          background: #fff;
+          background: #232323ff;
           display: flex;
           flex-direction: column;
+
+          flex: 1;
+          overflow: hidden; 
         }
 
         h2 {

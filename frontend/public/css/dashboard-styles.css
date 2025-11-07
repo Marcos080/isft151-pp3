@@ -2,7 +2,7 @@
     display: block;
     min-height: 100vh;
     color: #ffffff; 
-    font-family: Arial, sans-serif;
+    font-family:Arial, sans-serif;
 
 }
 
@@ -19,6 +19,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+
 }
 
 .sidebar header {
@@ -28,6 +29,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
 }
 
 #btn-logout {
@@ -50,12 +52,15 @@
 /* 🚨 AJUSTE CRÍTICO AQUÍ: */
 .main-content {
     flex-grow: 1; 
-    background-color: #000000; 
+    /* background-color: #000000;  */
     display: flex;
     justify-content: center; 
     align-items: center; 
     padding: 20px;
-    /* AÑADE ESTOS ESTILOS */
     min-height: calc(100vh - 40px); /* Asegura que el contenido interno (Pet Matcher) se apile si es necesario */
     box-sizing: border-box; /* Incluye padding en el width/height */
+
+     background-image: url('../img/opcion5.png');
+
+    background-position: center;
 }

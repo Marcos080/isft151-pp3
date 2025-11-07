@@ -4,11 +4,13 @@
     flex-direction: column;
     height: 500px;
     width: 100%;
-    border: 1px solid #ccc;
+    border: 1px solid #ff9500ff;
     border-radius: 10px;
     overflow: hidden;
     font-family: "Segoe UI", sans-serif;
-    background: #f4f6f9;
+    background-image: url('../img/FondoChat.png');
+    background-size: contain;
+    background-position: center;
 }
 
 /* Contenedor de los mensajes dentro del chat */
@@ -33,7 +35,7 @@
 
 /* Mensajes propios */
 .mine {
-    background: #007bff; /* azul */
+    background: #fd591d; /* azul */
     color: white;         /* texto blanco */
     align-self: flex-end;
     border-bottom-right-radius: 4px;
@@ -82,7 +84,7 @@ input {
 /* Botón de enviar */
 button {
     border: none;
-    background: #007bff;
+    background: #fd591d;
     color: white;
     padding: 0 20px;
     cursor: pointer;
@@ -91,5 +93,5 @@ button {
 }
 
 button:hover {
-    background: #0056b3;
+    background: #fd591d;
 }
