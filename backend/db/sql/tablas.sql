@@ -26,7 +26,18 @@ FOREIGN KEY (id_owner) REFERENCES user(id)
 
 );";
 
+cambio:`ALTER TABLE pet ADD COLUMN photo_url VARCHAR(500);`
 
+nueva pet:
+CREATE TABLE IF NOT EXISTS pet (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        id_owner INT NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        age INT NOT NULL,
+        description VARCHAR(255) NOT NULL,
+        photo_url VARCHAR(500), -- 🆕 almacena la URL de la imagen
+        FOREIGN KEY (id_owner) REFERENCES user(id) ON DELETE CASCADE
+    );
  
 
 const tabla_user_pet_follow = `CREATE TABLE IF NOT EXISTS user_pet_follow
