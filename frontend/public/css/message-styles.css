@@ -1,0 +1,95 @@
+/* Contenedor principal del chat */
+.message-container {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: "Segoe UI", sans-serif;
+    background: #f4f6f9;
+}
+
+/* Contenedor de los mensajes dentro del chat */
+#messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo general para cada mensaje */
+.message {
+    margin: 8px 0;
+    padding: 10px 14px;
+    border-radius: 18px;
+    max-width: 70%;
+    word-wrap: break-word;
+    font-size: 0.95em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Mensajes propios */
+.mine {
+    background: #007bff; /* azul */
+    color: white;         /* texto blanco */
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+
+/* Mensajes de otros usuarios */
+.theirs {
+    background: #e9ecef;  /* gris claro */
+    color: #212529;       /* texto oscuro */
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+
+/* Hora de envío del mensaje */
+.time {
+    display: block;
+    font-size: 0.75em;
+    margin-top: 4px;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: right;
+}
+
+/* Hora de los mensajes de otros usuarios */
+.theirs .time {
+    color: #666;
+    text-align: left;
+}
+
+/* Formulario de envío de mensaje */
+form {
+    display: flex;
+    border-top: 1px solid #ccc;
+    background: white;
+}
+
+/* Campo de texto del formulario */
+input {
+    flex: 1;
+    border: none;
+    padding: 12px;
+    font-size: 1em;
+    outline: none;
+    background: #fff;
+}
+
+/* Botón de enviar */
+button {
+    border: none;
+    background: #007bff;
+    color: white;
+    padding: 0 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: #0056b3;
+}

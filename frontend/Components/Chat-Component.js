@@ -80,7 +80,8 @@ export class ChatComponent extends HTMLElement {
         .chat-container {
           display: grid;
           grid-template-columns: 30% 70%;
-          height: 500px;
+          height: 600px;
+          width: 1000px;
           border: 1px solid #ccc;
           border-radius: 10px;
           overflow: hidden;
