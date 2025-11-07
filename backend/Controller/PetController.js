@@ -1,4 +1,4 @@
-const upload = require("../upload")
+const upload = require("../upload.js");
 
 class PetController
 {
@@ -17,7 +17,8 @@ class PetController
             try
             {
                 const {id_owner, name, age, description} = req.body;
-                const result = await this.model.agregar(id_owner, name, age, description);
+                const image = null;
+                const result = await this.model.agregar(id_owner, name, age, description, image);
                 res.json({ message: "mascota agregada correctamente", result})
             }
             catch(error)
@@ -72,12 +73,16 @@ class PetController
                 res.status(500).json({error: "error en la base de datos"});
             }
         })
-
-        this.app.post("/pet/:id/photo", upload.single("photo"), async (req, res) => {
+    
+        this.app.post(
+    "/pet/:id/photo",
+    upload.single("photo"),
+    async (req, res) => {
         try {
             const { id } = req.params;
-            const photoUrl = `/uploads/${req.file.filename}`; // guardamos ruta relativa
+            if (!req.file) return res.status(400).json({ error: "No se subió ningún archivo" });
 
+            const photoUrl = `/uploads/${req.file.filename}`;
             await this.model.setPhotoUrl(id, photoUrl);
 
             res.json({ message: "Foto guardada correctamente", photoUrl });
@@ -85,8 +90,9 @@ class PetController
             console.error("Error al subir la foto:", error);
             res.status(500).json({ error: "Error al guardar la foto" });
         }
-        });
-        }
+    }
+);
+    }
 }
 
 module.exports = { PetController };

@@ -1,27 +1,33 @@
 import './PetImageGalleryComponent.js'; 
 import './PetInfoComponent.js'; 
 import { UserService } from '../services/UserService.js';
-import { PetService } from '../services/PetService.js'; // ⬅️ nuevo
+import { PetService } from '../services/PetService.js'; 
 import { AuthService } from '../services/AuthService.js';
 
 class PetMatcherComponent extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
-        this.currentUserId = AuthService.getUserFromToken().id; // usuario simulado
-        this.pets = []; // todas las mascotas
-        this.currentIndex = 0; // índice actual
+        this.currentUserId = AuthService.getUserFromToken()?.id; 
+        this.pets = [];
+        this.currentIndex = 0;
     }
 
     async connectedCallback() {
-        await this.loadPets(); // carga las mascotas
-        this.render();         // muestra la primera
+        await this.loadPets(); 
+        this.render();         
         this.addEventListeners();
     }
 
     async loadPets() {
         try {
-            this.pets = await PetService.fetchAllPets();
+            const allPets = await PetService.fetchAllPets();
+            // Filtramos solo mascotas que tengan photoUrl o image
+            this.pets = allPets.map(pet => ({
+                ...pet,
+                photos: pet.image ? [pet.image] : ["/img/default.png"]
+            }));
+
             if (this.pets.length === 0) {
                 this.currentPet = null;
                 console.warn("⚠️ No hay mascotas disponibles");
@@ -80,35 +86,33 @@ class PetMatcherComponent extends HTMLElement {
         }
 
         const pet = this.currentPet;
-        const photos = JSON.stringify(pet.photos || ["/img/default.png"]);
+        // Convertimos el array de fotos a JSON para pasarlo al componente
+        const photos = JSON.stringify(pet.photos);
 
         this.shadowRoot.innerHTML = `
-             <link rel="stylesheet" href="/public/css/pet-matcher-styles.css">
-    <div class="pet-matcher-wrapper">
+            <link rel="stylesheet" href="/public/css/pet-matcher-styles.css">
+            <div class="pet-matcher-wrapper">
 
-        <pet-image-gallery-component 
-            pet-id="${pet.id}"
-            photos='${photos}'
-        ></pet-image-gallery-component>
+                <pet-image-gallery-component 
+                    pet-id="${pet.id}"
+                    photos='${photos}'
+                ></pet-image-gallery-component>
 
-        <div class="pet-details-and-actions">
+                <div class="pet-details-and-actions">
 
-            <!-- Botón rojo a la izquierda -->
-            <button id="btn-dislike" class="btn-action btn-dislike">❌</button>
+                    <button id="btn-dislike" class="btn-action btn-dislike">❌</button>
 
-            <!-- Info-card en el centro -->
-            <pet-info-component 
-                class="info-card"
-                name="${pet.name}"
-                age="${pet.age}"
-                description="${pet.description || 'Sin descripción.'}"
-            ></pet-info-component>
+                    <pet-info-component 
+                        class="info-card"
+                        name="${pet.name}"
+                        age="${pet.age}"
+                        description="${pet.description || 'Sin descripción.'}"
+                    ></pet-info-component>
 
-            <!-- Botón verde a la derecha -->
-            <button id="btn-like" class="btn-action btn-like">💚</button>
+                    <button id="btn-like" class="btn-action btn-like">💚</button>
 
-        </div>
-    </div>
+                </div>
+            </div>
         `;
     }
 }

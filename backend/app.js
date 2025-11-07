@@ -28,7 +28,13 @@ const petModel = new PetModel(conexion);
 const chatModel = new ChatModel(conexion);
 
 
+// const sql = `ALTER TABLE pet MODIFY COLUMN image VARCHAR(500) DEFAULT NULL;`
 
+// conexion.query(sql, (error, result) =>
+// {
+//     if(error){console.log(error);}
+//     console.log("bien");
+// })
 
 
 // CONTROLADORES
@@ -41,6 +47,9 @@ const authRouter = authRoutesFactory(authController);
 
 // Servidor Express
 const app = express();
+new PetController(app, petModel);
+
+
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
@@ -63,12 +72,12 @@ app.use("/auth", authRouter);
 const { verificarToken } = authController;
 
 // 🔒 RUTAS PROTEGIDAS: aplicar middleware a las rutas de mascotas
-app.use("/pet", verificarToken);
-app.use("/pets", verificarToken);
+// app.use("/pet");
+// app.use("/pets");
 // app.use("/chat", verificarToken);
 
 // 🐾 Controlador de mascotas
-new PetController(app, petModel);
+
 new ChatController(app, chatModel);
 
 

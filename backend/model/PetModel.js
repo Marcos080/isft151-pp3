@@ -12,6 +12,7 @@ class PetModel
             name VARCHAR(255) NOT NULL,
             age INT NOT NULL,
             description VARCHAR(255) NOT NULL,
+            image VARCHAR(500) DEFAULT NULL,
 
             FOREIGN KEY (id_owner) REFERENCES user(id) ON DELETE CASCADE
 
@@ -48,12 +49,12 @@ class PetModel
         this.conexion.query(setDescription_sql, [newDescription, id]);
     }
 
-    agregar(id_owner, name, age, description)
+    agregar(id_owner, name, age, description, image)
     {
         return new Promise((resolve, reject) =>
         {
-            const agregar_sql = `INSERT INTO pet(id_owner, name, age, description) VALUES (?, ?, ?, ?)`;
-            const valores = [id_owner, name, age, description];
+            const agregar_sql = `INSERT INTO pet(id_owner, name, age, description, image) VALUES (?, ?, ?, ?, ?)`;
+            const valores = [id_owner, name, age, description, image];
 
             this.conexion.query(agregar_sql, valores, (error, result) =>
             {
@@ -118,7 +119,7 @@ class PetModel
 
     setPhotoUrl(id, photoUrl) {
     return new Promise((resolve, reject) => {
-        const sql = `UPDATE pet SET photo_url = ? WHERE id = ?`;
+        const sql = `UPDATE pet SET image = ? WHERE id = ?`;
         this.conexion.query(sql, [photoUrl, id], (error, result) => {
             if (error) { console.error("Error al guardar la foto:", error); return reject(error); }
             console.log("Foto actualizada correctamente para la mascota:", id);

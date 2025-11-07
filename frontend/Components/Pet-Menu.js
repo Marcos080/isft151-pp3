@@ -65,17 +65,41 @@ class PetMenuComponent extends HTMLElement {
         this.pets.forEach((pet) => {
             const card = document.createElement("div");
             card.className = "pet-card";
+
+            // Usamos image de la base de datos
+            const photoHTML = pet.image && pet.image !== ""
+                ? `<img src="${window.location.origin}${pet.image}" alt="${pet.name}" class="pet-photo">`
+                : "";
+
             card.innerHTML = `
                 <h3>${pet.name}</h3>
                 <p><strong>Edad:</strong> ${pet.age}</p>
                 <p>${pet.description}</p>
+                ${photoHTML}
+                <input type="file" name="photo" data-id="${pet.id}" class="photo-input" style="display:none;">
+                <button data-id="${pet.id}" class="upload-btn">Subir foto</button>
                 <button data-id="${pet.id}" class="delete-btn">Borrar</button>
             `;
             listContainer.appendChild(card);
         });
 
+        // Eventos de borrar
         this.shadowRoot.querySelectorAll(".delete-btn").forEach((btn) => {
             btn.addEventListener("click", this.handleDeletePet.bind(this));
+        });
+
+        // Eventos de subir foto
+        this.shadowRoot.querySelectorAll(".upload-btn").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                const petId = e.target.dataset.id;
+                const fileInput = this.shadowRoot.querySelector(`.photo-input[data-id="${petId}"]`);
+                fileInput.click();
+            });
+        });
+
+        // Cuando se selecciona un archivo
+        this.shadowRoot.querySelectorAll(".photo-input").forEach((input) => {
+            input.addEventListener("change", this.handleUploadPhoto.bind(this));
         });
     }
 
@@ -108,7 +132,7 @@ class PetMenuComponent extends HTMLElement {
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || "Error agregando mascota");
 
-            this.pets.push({ id: data.result.insertId, name, age, description });
+            this.pets.push({ id: data.result.insertId, name, age, description, image: null });
             this.renderPets();
             form.reset();
         } catch (error) {
@@ -142,6 +166,40 @@ class PetMenuComponent extends HTMLElement {
         }
     }
 
+    async handleUploadPhoto(event) {
+        const fileInput = event.target;
+        const file = fileInput.files[0];
+        if (!file) return alert("Seleccioná un archivo primero");
+
+        const petId = fileInput.dataset.id;
+        const formData = new FormData();
+        formData.append("photo", file);
+
+        try {
+            const headers = AuthService.getAuthHeaders();
+            delete headers["Content-Type"]; // FormData lo maneja solo
+
+            const res = await fetch(`/pet/${petId}/photo`, {
+                method: "POST",
+                headers,
+                body: formData
+            });
+
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || "Error subiendo la foto");
+
+            // Actualizamos la foto en el array y re-renderizamos
+            const petIndex = this.pets.findIndex(p => p.id == petId);
+            if (petIndex > -1) this.pets[petIndex].image = data.photoUrl;
+            this.renderPets();
+
+            alert("Foto subida correctamente");
+        } catch (error) {
+            console.error("Error al subir la foto:", error);
+            alert("No se pudo subir la foto.");
+        }
+    }
+
     render() {
         this.shadowRoot.innerHTML = `
             <link rel="stylesheet" href="/public/css/pet-matcher-styles.css">
@@ -163,7 +221,17 @@ class PetMenuComponent extends HTMLElement {
                 .pets-list { display: grid; gap: 15px; }
                 .pet-card { background: #f8f9fa; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
                 .delete-btn { background: #dc3545; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; }
+                .upload-btn { background: #28a745; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; margin-right: 5px; }
                 .error { color: red; }
+
+                .pet-photo {
+                    max-width: 100px;
+                    max-height: 100px;
+                    border-radius: 8px;
+                    object-fit: cover;
+                    display: block;
+                    margin-bottom: 5px;
+                }
             </style>
         `;
     }
