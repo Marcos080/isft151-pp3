@@ -52,7 +52,7 @@ export class PetService {
             const token = localStorage.getItem("token");
 
             const res = await fetch("http://localhost:3000/pet", {
-                method: "PUT",
+                method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`

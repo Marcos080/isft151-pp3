@@ -10,7 +10,7 @@ class ChatController {
             res.json(rows);
         } catch (err) {
             console.error("❌ Error en /chat/list:", err);
-            res.status(500).json({ error: err.message });
+            res.status(500).json({ message: "Error interno al listar chats." });
         }
     }
 
@@ -47,7 +47,7 @@ class ChatController {
             });
         } catch (err) {
             console.error("❌ Error en /chat/start:", err);
-            res.status(500).json({ error: err.message });
+            res.status(500).json({ message: "Error al iniciar coversacion." });
         }
     }
 
@@ -64,7 +64,7 @@ class ChatController {
             const created = await this.model.addMessage(id_conversation, id_sender, content);
             res.json({ message: "Mensaje enviado", id: created.insertId });
         } catch (err) {
-            res.status(500).json({ error: err.message });
+            res.status(500).json({ message: "Error al enviar mensaje." });
         }
     }
 
@@ -74,7 +74,7 @@ class ChatController {
             const messages = await this.model.getMessages(id_conversation);
             res.json(messages);
         } catch (err) {
-            res.status(500).json({ error: err.message });
+            res.status(500).json({ message: "Error al obtener mensajes." });
         }
     }
 
@@ -84,7 +84,7 @@ class ChatController {
             const rows = await this.model.getUserConversations(id_user);
             res.json(rows);
         } catch (err) {
-            res.status(500).json({ error: err.message });
+            res.status(500).json({ message: "Error al obtener conversaciones." });
         }
     }
 }

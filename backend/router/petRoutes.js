@@ -10,7 +10,7 @@ module.exports = function (model) {
     
         // ✅ Rutas con prefijo como antes
     router.post("/pet", controller.agregarMascota.bind(controller));
-    router.put("/pet", controller.borrarMascota.bind(controller));
+    router.delete("/pet", controller.borrarMascota.bind(controller));
     router.get("/pets", controller.listarMascotas.bind(controller));
     router.get("/pet/:username", controller.buscarPorUsername.bind(controller));
     router.get("/pet/own_pets/:id", controller.listarMascotasDelUsuario.bind(controller));

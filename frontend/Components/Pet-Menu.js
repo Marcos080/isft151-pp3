@@ -147,7 +147,7 @@ class PetMenuComponent extends HTMLElement {
 
         try {
             const res = await fetch("/pet", {
-                method: "PUT",
+                method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                     ...AuthService.getAuthHeaders()
