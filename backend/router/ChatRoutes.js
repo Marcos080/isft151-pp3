@@ -1,9 +1,32 @@
+// router/chatRoutes.js
 const express = require("express");
-const router = express.Router();
+const ChatController = require("../Controller/ChatController");
 
-module.exports = function(ChatController) {
-    router.post('/start/:id_user/:id_pet', ChatController.startConversation);
-    router.post('/:id_conversation/message', ChatController.sendMessage);
-    router.get('/:id_conversation/messages', ChatController.getMessages);
+module.exports = function (model) {
+    const router = express.Router();
+    const controller = new ChatController(model); // ✅ sin app
+
+    router.get("/chat/list/:id_user", controller.listarChats.bind(controller));
+
+    router.post(
+        "/chat/start/:id_user/:id_pet",
+        controller.iniciarChat.bind(controller)
+    );
+
+    router.post(
+        "/chat/:id_conversation/message",
+        controller.enviarMensaje.bind(controller)
+    );
+
+    router.get(
+        "/chat/:id_conversation/messages",
+        controller.obtenerMensajes.bind(controller)
+    );
+
+    router.get(
+        "/chat/conversations/:id_user",
+        controller.listarConversaciones.bind(controller)
+    );
+
     return router;
 };

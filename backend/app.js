@@ -12,9 +12,10 @@ const userControllerFactory = require("./Controller/UserController");
 const userRoutesFactory = require("./router/UserRoutes");
 const authControllerFactory = require("./Controller/AuthController");
 const authRoutesFactory = require("./router/authRoutes");
-const { PetController } = require("./Controller/PetController");
-const {ChatController} = require("./Controller/ChatController");
 
+// 🚀 RUTAS SEPARADAS
+const petRoutes = require("./router/petRoutes");
+const chatRoutes = require("./router/ChatRoutes");
 
 // Conexión a la BD
 conectar();
@@ -36,7 +37,10 @@ const authRouter = authRoutesFactory(authController);
 const app = express();
 app.use(express.json());
 
-new PetController(app, petModel);
+// 🐶 PET: ahora se usa la ruta separada correctamente
+app.use("/", petRoutes(petModel));
+
+// 📂 Archivos estáticos
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.static(path.join(__dirname, "..", "frontend")));
 
@@ -45,10 +49,12 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "frontend", "static", "index.html"));
 });
 
+// 👤 USERS / AUTH
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
 
-new ChatController(app, chatModel);
+// 💬 CHAT: ahora también separado
+app.use("/", chatRoutes(chatModel));
 
 // SPA fallback: permite refrescar o navegar dentro del SPA sin errores 404
 app.use((req, res, next) => {

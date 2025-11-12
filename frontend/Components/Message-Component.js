@@ -1,4 +1,5 @@
 import { AuthService } from "../services/AuthService.js";
+import { ChatService } from "../services/ChatService.js";
 
 export class MessageComponent extends HTMLElement {
   constructor() {
@@ -15,7 +16,6 @@ export class MessageComponent extends HTMLElement {
     // ✅ Cargar usuario desde el token
     this.user = AuthService.getUserFromToken();
 
-    // Si no hay usuario autenticado, mostrar aviso
     if (!this.user) {
       this.shadowRoot.querySelector("#messages").innerHTML =
         "<p>⚠️ No estás autenticado. Iniciá sesión para enviar mensajes.</p>";
@@ -33,13 +33,10 @@ export class MessageComponent extends HTMLElement {
     this.setupEvents();
   }
 
-  // 🔹 Cargar mensajes del backend
+  // 🔹 Cargar mensajes del backend usando ChatService
   async loadMessages() {
     try {
-      const res = await fetch(`http://localhost:3000/chat/${this.conversationId}/messages`);
-      if (!res.ok) throw new Error(await res.text());
-
-      this.messages = await res.json();
+      this.messages = await ChatService.getMessages(this.conversationId);
       this.renderMessages();
     } catch (err) {
       console.error("Error al cargar mensajes:", err);
@@ -48,7 +45,7 @@ export class MessageComponent extends HTMLElement {
     }
   }
 
-  // 🔹 Enviar mensaje nuevo
+  // 🔹 Enviar mensaje nuevo usando ChatService
   async sendMessage(content) {
     if (!this.user) {
       console.error("⚠️ No hay usuario autenticado.");
@@ -56,21 +53,11 @@ export class MessageComponent extends HTMLElement {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/chat/${this.conversationId}/message`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id_sender: this.user.id, // ✅ asegurado que no sea null
-          content,
-        }),
-      });
-
-      if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(errorText);
-      }
-
-      const data = await res.json();
+      const data = await ChatService.sendMessage(
+        this.conversationId,
+        this.user.id,
+        content
+      );
       console.log("✅ Mensaje enviado:", data);
       await this.loadMessages(); // refresca los mensajes
     } catch (err) {
@@ -104,7 +91,7 @@ export class MessageComponent extends HTMLElement {
     const input = this.shadowRoot.querySelector("#message-input");
 
     form.addEventListener("submit", async (e) => {
-      e.preventDefault(); // ✅ evita el reload del SPA
+      e.preventDefault();
       const content = input.value.trim();
       if (!content) return;
       await this.sendMessage(content);
@@ -115,9 +102,7 @@ export class MessageComponent extends HTMLElement {
   // 🔹 Render base del componente
   render() {
     this.shadowRoot.innerHTML = `
-     
       <link rel="stylesheet" href="/public/css/message-styles.css">
-
       <div class="message-container">
         <div id="messages"></div>
         <form id="message-form">
@@ -128,6 +113,5 @@ export class MessageComponent extends HTMLElement {
     `;
   }
 }
-
 
 customElements.define("message-component", MessageComponent);
